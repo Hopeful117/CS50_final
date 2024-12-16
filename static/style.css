@@ -1,0 +1,49 @@
+#top
+{
+    display:flex;
+    justify-content: space-between;
+   
+   
+
+}
+
+#center
+{
+    display:flex;
+   
+    justify-content: center;
+    text-align: center;
+
+}
+
+#bottom
+{
+    display:flex;
+    justify-content: center;
+   font-weight: bold;
+}
+
+a
+{
+    color:black;
+
+}
+a:hover
+{
+    text-decoration: underline;
+}
+
+body
+{
+    background: rgb(0,80,242);
+    background: -moz-linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
+    background: -webkit-linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
+    background: linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0050f2",endColorstr="#ff0000",GradientType=1);
+}
+
+img
+{
+    border-style: groove;
+    border: 2px solid black;
+}
