@@ -21,9 +21,10 @@
 
 }
 
-#center
+form
 {
     display:flex;
+    flex-direction: column;
    
     justify-content: center;
     text-align: center;
@@ -67,4 +68,57 @@ img
     ); /* Effet dents de scie */
     background: white; /* Couleur autour de l'image */
     outline: 2px dashed black; /* Ajout d'une bordure extérieure */
+}
+
+.lesson
+{
+    
+        display: grid; /* Active la grille */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonnes dynamiques */
+        gap: 20px; /* Espacement entre les cases */
+        padding: 20px; /* Espacement interne du conteneur */
+        font-weight: bold;
+    
+}
+
+.vocab-item
+{
+    background-color: #f8f9fa; /* Couleur de fond des items */
+    border: 1px solid #dee2e6; /* Bordure des items */
+    border-radius: 10px; /* Coins arrondis */
+    padding: 15px; /* Espacement interne des items */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    text-align: center; /* Centrer le contenu */
+
+}
+
+.vocab-item h2
+{
+    font-size: 1.5em; /* Taille du mot */
+    color: #333; /* Couleur du texte */
+    margin-bottom: 10px;
+
+}
+
+.vocab-item p
+{
+    font-size: 1em; /* Texte des traductions et contexte */
+    color: #555;
+    margin: 5px 0;
+
+}
+
+audio
+{
+
+    margin: 10px 0; /* Espacement autour de l'audio */
+}
+
+.pannel
+{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }

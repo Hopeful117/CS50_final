@@ -6,16 +6,20 @@ Dashboard
 
 
 {% block content %}
-<div class="card">
-    <div class="card-header">
-      Lesson 1
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">Basic Vocabulary</h5>
-      <p class="card-text">A list of 10 words to get you started</p>
-      <a href="#" class="btn btn-primary">Let's go !</a>
-    </div>
+
+  {% for word, details in vocabulary.items() %}
+  <div class="lesson">
+  <div class="vocab-item">
+      <h2>{{ word }}</h2>
+      <p>Translation: {{ details.translation }}</p>
+      <audio controls>
+        <source src="{{ url_for('static', filename=details.pronunciation) }}" type="audio/mpeg">
+          Your browser does not support the audio element.
+      </audio>
+      <p>Context: {{details.context}}</p>
   </div>
+</div>
+{% endfor %}
 
 
 

@@ -148,12 +148,11 @@ def dashboard():
 
 @app.route("/lesson1", methods=["GET", "POST"])
 def lesson1():
-     vocabulary = {
-        "Bonjour": {"translation": "Hello", "pronunciation": "{{ url_for('static', filename='audio/bonjour.mp3') }}", "context":"A common greeting used in the morning and in the afternoon"},
-        "Comment allez vous ?": {"translation": "How are you ?", "pronunciation": "{{ url_for('static', filename='audio/comment_.mp3') }}","context":"A formal way to say How are you"},
-        "Thank you": {"translation": "Gracias", "pronunciation": "https://example.com/thank_you.mp3"},
-        "Excuse me": {"translation": "Perdón", "pronunciation": "https://example.com/excuse_me.mp3"}
-    }
+    vocabulary = {
+        "Bonjour": {"translation": "Hello", "pronunciation": "audio/bonjour.mp3", "context":"A common greeting used in the morning and in the afternoon"},
+        "Comment allez vous ?": {"translation": "How are you ?", "pronunciation": "audio/Comment_.mp3","context":"A formal way to say How are you"},
+        "Merci": {"translation": "Thank you", "pronunciation": "audio/Merci.mp3","context":"A common way to thank someone"},
+        "Excusez-moi": {"translation": "Excuse me", "pronunciation": "audio/Excusez.mp3","context":"A formal way to get someone attention"}}
 
-    return render_template("lesson1.html")
+    return render_template("lesson1.html",vocabulary=vocabulary)
 
