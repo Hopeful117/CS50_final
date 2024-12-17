@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['DATABASE'] = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'duck.db')
+DATABASE = 'duck.db'
 
 
 app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
@@ -22,10 +22,12 @@ Session(app)
 
 def get_db():
   
-    if not hasattr(g, '_database'):
-        g._database = sqlite3.connect(app.config['DATABASE'])
-        g._database.row_factory = sqlite3.Row  # pour accéder aux colonnes par nom
-    return g._database
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = make_dicts
+    return db
+
 
 # Fermer la base de données après chaque requête
 @app.teardown_appcontext
@@ -33,6 +35,12 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
+
+def make_dicts(cursor, row):
+    return dict((cursor.description[idx][0], value)
+                for idx, value in enumerate(row))
+
+
 
 @app.after_request
 def after_request(response):
@@ -67,13 +75,16 @@ def register():
             db.execute("INSERT INTO users (username, hash) VALUES (?, ?)",
                        (request.form.get("username"), hash))
             db.commit()
-            flash("success", category="success")
+            flash("Registration successful ! Please log in", category="success")
+            return redirect("/login")
             
-
+        except sqlite3.IntegrityError:
+            # Handle duplicate usernames gracefully
+            return apology("username already exists", 400)
         except Exception as e:
-            print(e)
-
-            return apology("error", 400)
+            # Log the error for debugging and return a generic error response
+            print(f"Error during registration: {e}")
+            return apology("An error occurred. Please try again.", 500)
 
     else:
         return render_template("register.html")
@@ -99,8 +110,8 @@ def login():
 
         # Query database for username
         rows = db.execute(
-            "SELECT * FROM users WHERE username = ?", request.form.get("username")
-        )
+            "SELECT * FROM users WHERE username = ?", (request.form.get("username"),)).fetchall()
+        
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(
@@ -112,7 +123,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/dashboard")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -128,4 +139,21 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+@app.route("/dashboard")
+def dashboard():
+    """Dashboard"""
+    return render_template("dashboard.html")
+
+
+@app.route("/lesson1", methods=["GET", "POST"])
+def lesson1():
+     vocabulary = {
+        "Bonjour": {"translation": "Hello", "pronunciation": "{{ url_for('static', filename='audio/bonjour.mp3') }}", "context":"A common greeting used in the morning and in the afternoon"},
+        "Comment allez vous ?": {"translation": "How are you ?", "pronunciation": "{{ url_for('static', filename='audio/comment_.mp3') }}","context":"A formal way to say How are you"},
+        "Thank you": {"translation": "Gracias", "pronunciation": "https://example.com/thank_you.mp3"},
+        "Excuse me": {"translation": "Perdón", "pronunciation": "https://example.com/excuse_me.mp3"}
+    }
+
+    return render_template("lesson1.html")
 

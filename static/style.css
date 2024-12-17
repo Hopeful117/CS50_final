@@ -10,6 +10,11 @@
 {
     display:flex;
     justify-content: space-between;
+    background-color: white;
+    align-items: center;
+    border: black 1px solid;
+    border-radius: 5px;
+    font-weight: bold;
   
    
    
@@ -33,7 +38,7 @@
    font-weight: bold;
 }
 
-a
+nav .nav-link
 {
     color:black;
     text-decoration: none;
@@ -41,16 +46,16 @@ a
 }
 a:hover
 {
+  
     text-decoration: underline;
 }
 
 body
 {
-    background: rgb(0,80,242);
-    background: -moz-linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
+    
     background: linear-gradient(90deg, rgba(0,80,242,1) 0%, rgba(255,255,255,1) 49%, rgba(255,0,0,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0050f2",endColorstr="#ff0000",GradientType=1);
+    
+    
 }
 
 img
