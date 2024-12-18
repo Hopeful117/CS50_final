@@ -188,7 +188,7 @@ def lesson1():
     "Comment allez vous ?": {
         "translation": "How are you?",
         "pronunciation": "audio/Comment_.mp3",
-        "context": "Used to ask how someone is doing."
+        "context": "Used to ask how someone is doing politely."
     },
     "Je ne sais pas": {
         "translation": "I don't know",
