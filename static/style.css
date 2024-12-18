@@ -10,18 +10,22 @@
 {
     display:flex;
     justify-content: space-between;
-    background-color: white;
+    color: black;
     align-items: center;
     border: black 1px solid;
     border-radius: 5px;
     font-weight: bold;
+    background-image: url("/static/banner.jpeg");
+    background-size: cover; /* Adapte l'image à la taille de la fenêtre */
+    background-repeat: no-repeat; /* Empêche la répétition */
+    background-position: center; /* Centre l'image */
   
    
    
 
 }
 
-form
+form,.home
 {
     display:flex;
     flex-direction: column;
@@ -45,6 +49,7 @@ nav .nav-link
     text-decoration: none;
 
 }
+
 a:hover
 {
   
@@ -70,55 +75,121 @@ img
     outline: 2px dashed black; /* Ajout d'une bordure extérieure */
 }
 
-.lesson
+
+
+
+
+
+.pannel
 {
     
-        display: grid; /* Active la grille */
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonnes dynamiques */
-        gap: 20px; /* Espacement entre les cases */
-        padding: 20px; /* Espacement interne du conteneur */
-        font-weight: bold;
-    
+    display: grid; /* Active la grille */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonnes dynamiques */
+    gap: 20px; /* Espacement entre les cases */
+    padding: 20px; /* Espacement interne du conteneur */
 }
 
-.vocab-item
-{
+.lesson {
+    display: grid; /* Active la grille */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonnes dynamiques */
+    gap: 20px; /* Espacement entre les cases */
+    padding: 20px; /* Espacement interne du conteneur */
+}
+
+
+.vocab-item {
     background-color: #f8f9fa; /* Couleur de fond des items */
     border: 1px solid #dee2e6; /* Bordure des items */
     border-radius: 10px; /* Coins arrondis */
     padding: 15px; /* Espacement interne des items */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
     text-align: center; /* Centrer le contenu */
-
+    font-weight: bold;
 }
 
-.vocab-item h2
-{
+.vocab-item h2 {
     font-size: 1.5em; /* Taille du mot */
     color: #333; /* Couleur du texte */
     margin-bottom: 10px;
+    border-bottom: black solid 1px;
 
 }
 
-.vocab-item p
-{
+.vocab-item p {
     font-size: 1em; /* Texte des traductions et contexte */
     color: #555;
     margin: 5px 0;
-
 }
 
-audio
-{
 
-    margin: 10px 0; /* Espacement autour de l'audio */
-}
-
-.pannel
-{
+audio {
+        width: 100%; /* Adapte l'audio à la largeur de son conteneur */
+        max-width: 100%; /* Empêche tout dépassement */
+        margin: 20px 0; /* Espacement autour de l'audio */
+    }
     
+
+
+.lesson-title
+{
+    text-align: center;
+    margin: 20px;
+}
+
+
+.btn-next
+{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.btn-next a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.c-button,.c-title
+{
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+}
+
+.c-form
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:200px;
+}
+    
+
+img
+{
+margin: 30px;
+}
+
+#t-home
+{
+    margin-top: 20px;
+}
+
+.card-body
+{
+    text-align: center;
+}
+
+.card-header
+{
+    font-weight: bold;
+    text-decoration: underline;
 }

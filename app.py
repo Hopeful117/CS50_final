@@ -148,11 +148,68 @@ def dashboard():
 
 @app.route("/lesson1", methods=["GET", "POST"])
 def lesson1():
+    
     vocabulary = {
-        "Bonjour": {"translation": "Hello", "pronunciation": "audio/bonjour.mp3", "context":"A common greeting used in the morning and in the afternoon"},
-        "Comment allez vous ?": {"translation": "How are you ?", "pronunciation": "audio/Comment_.mp3","context":"A formal way to say How are you"},
-        "Merci": {"translation": "Thank you", "pronunciation": "audio/Merci.mp3","context":"A common way to thank someone"},
-        "Excusez-moi": {"translation": "Excuse me", "pronunciation": "audio/Excusez.mp3","context":"A formal way to get someone attention"}}
+    "Bonjour": {
+        "translation": "Hello",
+        "pronunciation": "audio/bonjour.mp3",
+        "context": "Used to greet someone during the day."
+    },
+    "Merci": {
+        "translation": "Thank you",
+        "pronunciation": "audio/Merci.mp3",
+        "context": "Used to express gratitude."
+    },
+    "Excusez-moi": {
+        "translation": "Excuse me",
+        "pronunciation": "audio/Excusez.mp3",
+        "context": "Used to get someone's attention politely."
+    },
+    "Oui": {
+        "translation": "Yes",
+        "pronunciation": "audio/Oui.mp3",
+        "context": "Used to affirm something."
+    },
+    "Non": {
+        "translation": "No",
+        "pronunciation": "audio/Non.mp3",
+        "context": "Used to negate something."
+    },
+    "S'il vous plaît": {
+        "translation": "Please",
+        "pronunciation": "audio/sil_vous_plait.mp3",
+        "context": "Used to politely ask for something."
+    },
+    "Au revoir": {
+        "translation": "Goodbye",
+        "pronunciation": "audio/au_revoir.mp3",
+        "context": "Used to say farewell."
+    },
+    "Comment allez vous ?": {
+        "translation": "How are you?",
+        "pronunciation": "audio/Comment_.mp3",
+        "context": "Used to ask how someone is doing."
+    },
+    "Je ne sais pas": {
+        "translation": "I don't know",
+        "pronunciation": "audio/je_ne_sais_pas.mp3",
+        "context": "Used to indicate uncertainty."
+    },
+    "Bienvenue": {
+        "translation": "Welcome",
+        "pronunciation": "audio/bienvenue.mp3",
+        "context": "Used to greet someone arriving at a place."
+    }
+}
+
 
     return render_template("lesson1.html",vocabulary=vocabulary)
 
+
+
+
+@app.route("/quizz1", methods=["GET", "POST"])
+def quizz1():
+
+    return render_template("quizz1.html")
+    

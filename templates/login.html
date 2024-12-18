@@ -6,6 +6,7 @@
 
 
 {% block content %}
+<div class="c-form">
     <form action="/login" method="post">
         <div class="mb-3">
             <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
@@ -15,4 +16,5 @@
         </div>
         <button class="btn btn-primary" type="submit">Log In</button>
     </form>
+</div>
 {% endblock %}
