@@ -5,10 +5,29 @@ Dashboard
 {% endblock %}
 
 
-{% block content %}
 
-<div class="c-button">
-<button class="btn-next"><a>Lesson 2</a></button>
+{% block content %}
+<h1 class="title">Quiz 1</h1>
+<div class="questionnaire">
+
+<h2 class="question">{{question}}</h2>
+
+<form method="POST" >
+    <input type="hidden" name="question" value="{{ question }}"/>
+    <div class="answers">
+    
+    {% for answer in answers %}
+    <div>
+    <label for="choice{{loop.index}}">{{answer}}</label>
+    <input type="radio" id="choice{{loop.index}}" name="choice" value="{{answer}}"/>
+    </div>
+    {% endfor %}
+    
+    </div>
+    <button type="submit" class="btn-next">Validate</button>
+    
+</form> 
+<h2>{{score}}/10</h2>
 </div>
- 
+
 {% endblock %}

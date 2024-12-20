@@ -2,8 +2,11 @@ import os
 import time
 import datetime
 import sqlite3
-from flask import Flask, flash, redirect, render_template, request, session,g
+import random
+from flask import Flask, flash, redirect, render_template, request, session,g, jsonify
 from flask_session import Session
+from data import lesson1
+
 
 from helper import apology, login_required
 
@@ -141,75 +144,87 @@ def logout():
     return redirect("/")
 
 @app.route("/dashboard")
+@login_required
 def dashboard():
     """Dashboard"""
     return render_template("dashboard.html")
 
 
 @app.route("/lesson1", methods=["GET", "POST"])
-def lesson1():
+@login_required
+def lesson1_page():
     
-    vocabulary = {
-    "Bonjour": {
-        "translation": "Hello",
-        "pronunciation": "audio/bonjour.mp3",
-        "context": "Used to greet someone during the day."
-    },
-    "Merci": {
-        "translation": "Thank you",
-        "pronunciation": "audio/Merci.mp3",
-        "context": "Used to express gratitude."
-    },
-    "Excusez-moi": {
-        "translation": "Excuse me",
-        "pronunciation": "audio/Excusez.mp3",
-        "context": "Used to get someone's attention politely."
-    },
-    "Oui": {
-        "translation": "Yes",
-        "pronunciation": "audio/Oui.mp3",
-        "context": "Used to affirm something."
-    },
-    "Non": {
-        "translation": "No",
-        "pronunciation": "audio/Non.mp3",
-        "context": "Used to negate something."
-    },
-    "S'il vous plaît": {
-        "translation": "Please",
-        "pronunciation": "audio/sil_vous_plait.mp3",
-        "context": "Used to politely ask for something."
-    },
-    "Au revoir": {
-        "translation": "Goodbye",
-        "pronunciation": "audio/au_revoir.mp3",
-        "context": "Used to say farewell."
-    },
-    "Comment allez vous ?": {
-        "translation": "How are you?",
-        "pronunciation": "audio/Comment_.mp3",
-        "context": "Used to ask how someone is doing politely."
-    },
-    "Je ne sais pas": {
-        "translation": "I don't know",
-        "pronunciation": "audio/je_ne_sais_pas.mp3",
-        "context": "Used to indicate uncertainty."
-    },
-    "Bienvenue": {
-        "translation": "Welcome",
-        "pronunciation": "audio/bienvenue.mp3",
-        "context": "Used to greet someone arriving at a place."
-    }
-}
+   
 
-
-    return render_template("lesson1.html",vocabulary=vocabulary)
-
-
-
+    return render_template("lesson1.html",vocabulary=lesson1)
 
 @app.route("/quizz1", methods=["GET", "POST"])
+@login_required
 def quizz1():
+    db=get_db()
+    user_id=session.get("user_id")
+    if "score" not in session:
+        session["score"] = 0  # Initialisation du score dans la session
+        session["test_size"] = 0  # Initialisation du nombre de questions
+    score = session["score"]
+    test_size = session["test_size"]
 
-    return render_template("quizz1.html")
     
+    
+    
+    if request.method == "POST":
+        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
+        question = session.get("question") 
+
+        # Vérifie si la réponse est correcte
+        correct_answer = lesson1[question]["translation"]
+        
+        if selected_answer == correct_answer:
+            score += 1  # Incrémente le score
+        test_size += 1  # Incrémente le nombre de questions
+
+        session["score"] = score
+        session["test_size"] = test_size
+
+        # Si 10 questions ont été posées, on affiche le score final
+        if test_size >= 10:
+            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz1", session["score"]))
+            db.commit()
+            session.pop('score', None)  # Reset score or use session.clear() for all session data
+            session.pop('test_size', None)  # Reset any other session data
+          
+            return render_template("dashboard.html", score=score)
+
+    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
+    question = random.choice(list(lesson1.keys()))
+    session["question"] = question
+    choice2 = random.choice(list(lesson1.keys()))
+    choice3 = random.choice(list(lesson1.keys()))
+    correct_answer = lesson1[question]["translation"]
+    answer2 = lesson1[choice2]["translation"]
+    answer3 = lesson1[choice3]["translation"]
+    
+    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
+    answers = [correct_answer, answer2, answer3]
+    random.shuffle(answers)
+
+    # Envoie la question et les réponses à la page
+
+    
+    
+    return render_template("quizz1.html", question=question, answers=answers, score=score)
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    
+
