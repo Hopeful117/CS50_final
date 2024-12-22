@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Scoreboard
+{% endblock %}
+
+{% block content %}
+<table>
+    <th>Quiz</th>
+    <th>Score</th>
+    <th>Date</th>
+{% for row in scoreboard %}
+<tr>
+    <td>{{row.quiz_name}}</td>
+    <td>{{row.score}}/10</td>
+    <td>{{row.date}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+{% endblock %}

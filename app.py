@@ -215,6 +215,72 @@ def quizz1():
     return render_template("quizz1.html", question=question, answers=answers, score=score)
 
 
+@app.route("/about")
+def about():
+
+    return render_template("about.html")
+
+
+@app.route("/account",methods=["GET", "POST"])
+@login_required
+
+def account():
+
+
+    return render_template("account.html")
+
+@app.route("/pswd_change", methods=["GET", "POST"])
+@login_required
+def pswd_change():
+    db=get_db()
+    user_id = db.execute("SELECT id FROM users WHERE id=?", (session["user_id"],)).fetchone()
+
+    if request.method == "POST":
+        if not request.form.get("password"):
+            return apology("must provide password", 403)
+        if not request.form.get("confirmation"):
+            return apology("must confirm password", 403)
+        if request.form.get("password") != request.form.get("confirmation"):
+            return apology("passwords don't match", 403)
+
+        old = db.execute("SELECT hash FROM users WHERE id = ?", (user_id["id"],)).fetchone()
+
+        hash = generate_password_hash(request.form.get("password"), method='scrypt', salt_length=16)
+        
+
+        if check_password_hash(old["hash"], request.form.get("password")):
+            return apology("Do not reuse password", 403)
+
+        try:
+            db.execute("UPDATE users SET hash = ? WHERE id = ?", (hash, user_id["id"],))
+            db.commit()
+            logout()
+            return redirect("/")
+            
+            
+
+        except Exception as e:
+            print(f"Exception: {e}")
+            return apology("Error", 403)
+
+    return render_template("change_pswd.html")
+
+
+@app.route ("/scoreboard")
+@login_required
+def scoreboard():
+    db=get_db()
+    user_id = db.execute("SELECT id FROM users WHERE id=?", (session["user_id"],)).fetchone()
+
+    scoreboard=db.execute("SELECT quiz_name,score,date FROM quiz_results WHERE user_id = ?",(user_id["id"],)).fetchall()
+
+    return render_template("scoreboard.html",scoreboard=scoreboard)
+
+
+
+
+
+
 
 
 

@@ -228,3 +228,93 @@ margin: 30px;
 {
     margin:20px;
 }
+
+#about
+{
+    text-align: center;
+    margin: 30px;
+}
+
+.account_menu
+{
+    display: flex;
+    flex-direction: column;
+    
+    justify-content: center;
+    align-items: center;
+    gap:30px;
+    font-weight: bold;
+    
+    
+    
+
+    margin:30px;
+}
+
+.account_menu button
+
+{
+    width: 200px;
+    height: 100px;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.account_menu button a
+{
+    text-decoration: none;
+    color: black;
+
+}
+
+.apology
+
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 80%; /* La table occupe 80% de la largeur de la page */
+    margin: 20px auto; /* Centre la table horizontalement */
+    border-collapse: collapse; /* Fusionne les bordures pour un style propre */
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajoute une ombre discrète */
+    text-align: center;
+    font-weight: bold;
+}
+
+th, td {
+    text-align: center; /* Centre le texte dans chaque cellule */
+    padding: 12px; /* Espace à l'intérieur des cellules */
+    border: 1px solid #ddd; /* Bordure fine et discrète */
+}
+
+th {
+    background-color:blue;/* Couleur d'arrière-plan pour les en-têtes */
+    color: white; /* Texte en blanc */
+    font-weight: bold;
+    text-transform: uppercase; /* Texte en majuscules */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Ligne d'arrière-plan différente pour les lignes paires */
+}
+
+tr:hover {
+    background-color: #ddd; /* Change la couleur au survol */
+}
+
+td {
+    color: #333; /* Couleur de texte pour les cellules */
+    font-size: 14px;
+}
+
+caption {
+    margin-bottom: 10px; /* Espace entre le titre et la table */
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    color: #555;
+}
