@@ -16,25 +16,31 @@
 <body>
    
     
-    <div id="top">
+<div id="top">
+    <div>
     <header>
         <h1>Duck Language Learning</h1>
         <img id="duck" src="{{url_for('static',filename='test.jpeg')}}">
     </header>
+    </div>
     {% if session["user_id"] %}
+    <div>
         <nav class="nav">
             <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
             <a class="nav-link" href="/about">About</a>
             <a class="nav-link" href="/account">Account</a>
             <a class="nav-link" href="/logout">Logout</a>
         </nav>
+    </div>
     {% else %}
+    <div>
         <nav class="nav">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
             <a class="nav-link" href="/about">About</a>
             <a class="nav-link" href="/login">Login</a>
             <a class="nav-link" href="/register">Register</a>
         </nav>
+    </div>
       {% endif %}
     {% if get_flashed_messages() %}
       <div class="alert alert-primary mb-0 text-center" role="alert">
@@ -42,7 +48,7 @@
     </div>
     {% endif %}
       
-    </div>
+</div>
     <div id="center">
     <main>
         {% block content %}
