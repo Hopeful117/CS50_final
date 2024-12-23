@@ -50,3 +50,19 @@ lesson1= {
         "context": "Used to greet someone arriving at a place."
     }
     }
+
+
+
+lesson2 = {
+    "Pomme": {"translation": "apple", "pronunciation": "audio/pomme.mp3", "context": "A fruit that is red or green."},
+    "Livre": {"translation": "book", "pronunciation": "audio/livre.mp3", "context": "An object containing written pages."},
+    "Voiture": {"translation": "car", "pronunciation": "audio/voiture.mp3", "context": "A vehicle used for transportation."},
+    "Chien": {"translation": "dog", "pronunciation": "audio/chien.mp3", "context": "A common domestic animal, often kept as a pet(male)."},
+    "Maison": {"translation": "house", "pronunciation": "audio/maison.mp3", "context": "A building where people live."},
+    "Fleur": {"translation": "flower", "pronunciation": "audio/fleur.mp3", "context": "A part of a plant that blooms, often colorful."},
+    "Eau": {"translation": "water", "pronunciation": "audio/eau.mp3", "context": "A clear liquid essential for life."},
+    "Soleil": {"translation": "sun", "pronunciation": "audio/soleil.mp3", "context": "The star at the center of our solar system."},
+    "Arbre": {"translation": "tree", "pronunciation": "audio/arbre.mp3", "context": "A tall plant with a trunk and branches."},
+    "Chat": {"translation": "cat", "pronunciation": "audio/chat.mp3", "context": "A small domestic animal, often independent and curious(male)."}
+}
+

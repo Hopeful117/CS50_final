@@ -5,7 +5,7 @@ import sqlite3
 import random
 from flask import Flask, flash, redirect, render_template, request, session,g, jsonify
 from flask_session import Session
-from data import lesson1
+from data import lesson1,lesson2
 
 
 from helper import apology, login_required
@@ -163,9 +163,9 @@ def lesson1_page():
 def quizz1():
     db=get_db()
     user_id=session.get("user_id")
-    if "score" not in session:
-        session["score"] = 0  # Initialisation du score dans la session
-        session["test_size"] = 0  # Initialisation du nombre de questions
+    
+    session["score"] = 0  # Initialisation du score dans la session
+    session["test_size"] = 0  # Initialisation du nombre de questions
     score = session["score"]
     test_size = session["test_size"]
 
@@ -275,6 +275,116 @@ def scoreboard():
     scoreboard=db.execute("SELECT quiz_name,score,date FROM quiz_results WHERE user_id = ?",(user_id["id"],)).fetchall()
 
     return render_template("scoreboard.html",scoreboard=scoreboard)
+
+
+@app.route("/delete_account", methods=["GET","POST"])
+@login_required
+def delete_account():
+    db=get_db()
+    user_id = db.execute("SELECT id FROM users WHERE id=?", (session["user_id"],)).fetchone()
+    psw= db.execute("SELECT hash FROM users WHERE id = ?", (user_id["id"],)).fetchone()
+
+    if request.method == "POST":
+        if not request.form.get("password"):
+            return apology("must provide password", 403)
+        if not request.form.get("confirmation"):
+            return apology("must confirm password", 403)
+        if request.form.get("password") != request.form.get("confirmation"):
+            return apology("passwords don't match", 403)
+        
+        if not check_password_hash(psw["hash"],request.form.get("password")):
+            return apology("password dont match",403)
+        
+        try:
+            db.execute("DELETE FROM quiz_results WHERE user_id=?",(session["user_id"],))
+            db.commit()
+            db.execute("DELETE FROM users WHERE id=?",(session["user_id"],))
+            db.commit()
+            session.clear()
+            return redirect("/")
+        
+        except:
+            return apology("account was not deleted",400)
+
+        
+
+
+
+
+    
+
+
+    return render_template("delete.html")
+
+
+@app.route("/lesson2", methods=["GET", "POST"])
+@login_required
+def lesson2_page():
+    
+   
+
+    return render_template("lesson2.html",vocabulary=lesson2)
+
+
+
+@app.route("/quizz2", methods=["GET", "POST"])
+@login_required
+def quizz2():
+    db=get_db()
+    user_id=session.get("user_id")
+    
+    session["score"] = 0  # Initialisation du score dans la session
+    session["test_size"] = 0  # Initialisation du nombre de questions
+    score2 = session["score"]
+    test_size = session["test_size"]
+
+    
+    
+    
+    if request.method == "POST":
+        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
+        question = session.get("question") 
+
+        # Vérifie si la réponse est correcte
+        correct_answer = lesson2[question]["translation"]
+        
+        if selected_answer == correct_answer:
+            score2 += 1  # Incrémente le score
+        test_size += 1  # Incrémente le nombre de questions
+
+        session["score"] = score2
+        session["test_size"] = test_size
+
+        # Si 10 questions ont été posées, on affiche le score final
+        if test_size >= 10:
+            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz2", session["score"]))
+            db.commit()
+            session.pop('score', None)  # Reset score or use session.clear() for all session data
+            session.pop('test_size', None)  # Reset any other session data
+          
+            return render_template("dashboard.html", score=score2)
+
+    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
+    question = random.choice(list(lesson2.keys()))
+    session["question"] = question
+    choice2 = random.choice(list(lesson2.keys()))
+    choice3 = random.choice(list(lesson2.keys()))
+    correct_answer = lesson2[question]["translation"]
+    answer2 = lesson2[choice2]["translation"]
+    answer3 = lesson2[choice3]["translation"]
+    
+    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
+    answers = [correct_answer, answer2, answer3]
+    random.shuffle(answers)
+
+    # Envoie la question et les réponses à la page
+
+    
+    
+    return render_template("quizz2.html", question=question, answers=answers, score=score2)
+
+
+
 
 
 
