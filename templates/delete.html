@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Delete account
+{% endblock %}
+
+{% block content %}
+    <h2 class="title">Delete account</h2>
+    <p id="warning">Please not that this action is not reversible</p>
+    <div class="c-form">
+    <form action="/delete_account" method="post">
+
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirmation" type="password">
+        </div>
+        <button class="btn btn-primary" type="submit">DELETE</button>
+    </form>
+</div>
+    
+{% endblock %}

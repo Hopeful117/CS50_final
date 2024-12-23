@@ -15,10 +15,11 @@
     border: black 1px solid;
     border-radius: 5px;
     font-weight: bold;
-    background-image: url("/static/banner.jpeg");
-    background-size: cover; /* Adapte l'image à la taille de la fenêtre */
-    background-repeat: no-repeat; /* Empêche la répétition */
-    background-position: center; /* Centre l'image */
+    background-color: white;
+    font-family: "Playwrite CO Guides", serif;
+    font-weight: 400;
+    font-style: normal;
+   
   
    
    
@@ -318,3 +319,26 @@ caption {
     text-align: center;
     color: #555;
 }
+
+#duck
+{
+    width:100px;
+    height: 100px;
+}
+
+header
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+    
+}
+
+#warning
+{
+    color:red;
+    text-align: center;
+}
+
