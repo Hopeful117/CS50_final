@@ -13,7 +13,7 @@
 ### The app.py is the file that contains all the logic of the app. The python library we used are imported on this file such as Flask,Flask_session,werkzeug_security,sqlite3... Each route in the file is linked to an HTML page. The Flask session library allow to store temporary data such as the name of the user, it's current score in the quizzes.All those data can be cleared using the function session.clear.The werkzeug_security library allow to generate hashes to safely store user password in database. It's check_password_hash function allow to compare those hashes to the password the user enter while login in.
 
 ### The data.py file contains dictionnary used by the lesson to save space in the app.py file.
-### Duck.db is the sqlite3 database. It contains 2 tables, One to store users usernames and hashed password, each users being associated with a unique id, two a quizz result database which store all results from quizzes.All results are associated with user id from the users table to prevent repetition as much as possible.
+### Duck.db is the sqlite3 database. It contains 2 tables, One to store users usernames and hashed password, each users being associated with a unique id, two a quizz result table which store all results from quizzes.All results are associated with user id from the users table to prevent repetition as much as possible.
 
 ### The helper.py file contains functions from the Finance problem. Some of the code from this app is reused from my version of the finance problem set.
 

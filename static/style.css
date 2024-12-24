@@ -302,6 +302,9 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2; /* Ligne d'arrière-plan différente pour les lignes paires */
 }
+tr:nth-child(odd) {
+    background-color: #f4f4f4; /* Ligne d'arrière-plan différente pour les lignes paires */
+}
 
 tr:hover {
     background-color: #ddd; /* Change la couleur au survol */
@@ -369,4 +372,53 @@ footer
 
   
    
+}
+
+#pp
+{
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+
+}
+
+#pp th,td
+
+{
+    padding: 12px;
+    text-align: left;
+}
+
+
+#pp th
+{
+    background-color: #f4f4f4;
+    color:black;
+}
+
+#pp tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+#pp tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+
+.core
+{
+    background-color: #f4f4f4;
+    font-weight: bold;
+    text-align: justify;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    word-break: break-all;
+}
+
+.core h2
+
+{
+    text-decoration: underline;
 }

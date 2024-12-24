@@ -66,3 +66,46 @@ lesson2 = {
     "Chat": {"translation": "cat", "pronunciation": "audio/chat.mp3", "context": "A small domestic animal, often independent and curious(male)."}
 }
 
+lesson3 = {
+    "Je": {
+        "english_sentence": "I am learning French.",
+        "french_sentence": "__ suis en train d'apprendre le français."
+    },
+    "Tu": {
+        "english_sentence": "You are my friend.",
+        "french_sentence": "__ es mon ami."
+    },
+    "Il": {
+        "english_sentence": "He is watching TV.",
+        "french_sentence": "__ regarde la télévision."
+    },
+    "Elle": {
+        "english_sentence": "She is reading a book.",
+        "french_sentence": "__ lit un livre."
+    },
+    "On": {
+        "english_sentence": "One should always be polite.",
+        "french_sentence": "__ devrait toujours être poli."
+    },
+    "Nous": {
+        "english_sentence": "We are going to the park.",
+        "french_sentence": "__ allons au parc."
+    },
+    "Vous": {
+        "english_sentence": "You are very kind.",
+        "french_sentence": "__ êtes très gentil."
+    },
+    "Ils": {
+        "english_sentence": "They are playing football.",
+        "french_sentence": "__ jouent au football."
+    },
+    "Elles": {
+        "english_sentence": "They are shopping together.",
+        "french_sentence": "__ font du shopping ensemble."
+    }
+}
+
+
+
+
+
