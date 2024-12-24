@@ -5,7 +5,7 @@ import sqlite3
 import random
 from flask import Flask, flash, redirect, render_template, request, session,g, jsonify
 from flask_session import Session
-from data import lesson1,lesson2
+from data import lesson1,lesson2,lesson3
 
 
 from helper import apology, login_required
@@ -163,9 +163,13 @@ def lesson1_page():
 def quizz1():
     db=get_db()
     user_id=session.get("user_id")
+  
+    if "score" not in session:
+        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+    if "test_size" not in session:
+        session["test_size"] = 0
     
-    session["score"] = 0  # Initialisation du score dans la session
-    session["test_size"] = 0  # Initialisation du nombre de questions
+   
     score = session["score"]
     test_size = session["test_size"]
 
@@ -179,7 +183,7 @@ def quizz1():
         # Vérifie si la réponse est correcte
         correct_answer = lesson1[question]["translation"]
         
-        if selected_answer == correct_answer:
+        if selected_answer.strip().lower() == correct_answer.strip().lower():
             score += 1  # Incrémente le score
         test_size += 1  # Incrémente le nombre de questions
 
@@ -333,8 +337,10 @@ def quizz2():
     db=get_db()
     user_id=session.get("user_id")
     
-    session["score"] = 0  # Initialisation du score dans la session
-    session["test_size"] = 0  # Initialisation du nombre de questions
+    if "score" not in session:
+        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+    if "test_size" not in session:
+        session["test_size"] = 0
     score2 = session["score"]
     test_size = session["test_size"]
 
@@ -348,7 +354,7 @@ def quizz2():
         # Vérifie si la réponse est correcte
         correct_answer = lesson2[question]["translation"]
         
-        if selected_answer == correct_answer:
+        if selected_answer.strip().lower() == correct_answer.strip().lower():
             score2 += 1  # Incrémente le score
         test_size += 1  # Incrémente le nombre de questions
 
@@ -382,6 +388,85 @@ def quizz2():
     
     
     return render_template("quizz2.html", question=question, answers=answers, score=score2)
+
+
+
+@app.route("/lesson3", methods=["GET", "POST"])
+@login_required
+def lesson3_page():
+    
+   
+
+    return render_template("lesson3.html")
+
+@app.route("/quizz3", methods=["GET","POST"])
+@login_required
+def quizz3():
+    db=get_db()
+    user_id=session.get("user_id")
+    
+    if "score" not in session:
+        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+    if "test_size" not in session:
+        session["test_size"] = 0
+
+    score3 = session["score"]
+    test_size = session["test_size"]
+
+    
+    
+    
+    if request.method == "POST":
+        
+        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
+        question = session.get("question") 
+
+        # Vérifie si la réponse est correcte
+        correct_answer = question
+        print(question)
+        print(selected_answer)
+        print(correct_answer)
+       
+        
+        if selected_answer.strip().lower() == correct_answer.strip().lower():
+           
+            score3=score3+1  # Incrémente le score
+        test_size += 1  # Incrémente le nombre de questions
+
+        session["score"] = score3
+        print(f"{session['score']}")
+        session["test_size"] = test_size
+        
+
+        # Si 10 questions ont été posées, on affiche le score final
+        if test_size >= 10:
+            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz3", session["score"]))
+            db.commit()
+            session.pop('score', None)  # Reset score or use session.clear() for all session data
+            session.pop('test_size', None)  # Reset any other session data
+          
+            return render_template("dashboard.html", score=score3)
+
+    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
+    question = random.choice(list(lesson3.keys()))
+    french= lesson3[question]["french_sentence"]
+    english=lesson3[question]["english_sentence"]
+    session["question"] = question
+    choice2 = random.choice(list(lesson3.keys()))
+    choice3 = random.choice(list(lesson3.keys()))
+    correct_answer = question
+    answer2 = choice2
+    answer3 = choice3
+    
+    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
+    answers = [correct_answer, answer2, answer3]
+    random.shuffle(answers)
+
+    # Envoie la question et les réponses à la page
+
+
+    return render_template("quizz3.html" ,question=question, answers=answers, score=score3,french=french,english=english)
+
 
 
 
