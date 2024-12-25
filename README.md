@@ -17,7 +17,11 @@
 
 ### The helper.py file contains functions from the Finance problem. Some of the code from this app is reused from my version of the finance problem set.
 
-### The logging_config.py manages how the app log how the app behave. In developpement the log are written in app.log while in production the log will be visible in gunicorn.
+### The logging_config.py manages how the app log how the app behave. In developpement we can use the app.log to identify issues and in production we will have access to the gunicorn logs as well to monitor the apps.
+
+### The requirement.txt file allow to automatically install dependencies in productions.
+
+### The Github workflows file automatically deploy updates in the production server after every push to the github repository.gi
 
 
 
