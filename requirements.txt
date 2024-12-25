@@ -34,7 +34,7 @@ importlib-metadata==4.6.4
 itsdangerous==2.2.0
 jeepney==0.7.1
 Jinja2==3.1.4
-kernelstub==3.1.4
+
 keyring==23.5.0
 language-selector==0.1
 launchpadlib==1.10.16
