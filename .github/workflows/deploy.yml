@@ -25,6 +25,13 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -t rsa hopeful117.duckdns.org >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          chmod 644 ~/.ssh/known_hosts
+
       - name: Copy files to the server
         run: |
           scp -r ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
