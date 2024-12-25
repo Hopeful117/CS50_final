@@ -1,0 +1,41 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow lorsqu'il y a un push sur la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Exécute le job sur une machine virtuelle Ubuntu
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'  # Utiliser la version Python de votre choix
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Copy files to the server
+        run: |
+          scp -r ./ ludo@hopeserver:/var/www/DLL/CS50_final
+
+      - name: SSH into the server and restart services
+        run: |
+          ssh -o StrictHostKeyChecking=no ludo@hopeserver << 'EOF'
+            cd /var/www/DLL/CS50_final
+            source venv/bin/activate
+            # Assurez-vous que vous redémarrez le service Gunicorn ou Nginx si nécessaire
+            sudo systemctl restart gunicorn
+            sudo systemctl restart nginx
+          EOF
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

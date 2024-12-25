@@ -6,6 +6,7 @@ import random
 from flask import Flask, flash, redirect, render_template, request, session,g, jsonify
 from flask_session import Session
 from data import lesson1,lesson2,lesson3
+from logging_config import setup_logger
 
 
 from helper import apology, login_required
@@ -13,6 +14,8 @@ from helper import apology, login_required
 from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
+logger = setup_logger()
+logger.info("Application started correctly")
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -79,6 +82,7 @@ def register():
                        (request.form.get("username"), hash))
             db.commit()
             flash("Registration successful ! Please log in", category="success")
+            logger.info("User registered sucessfully")
             return redirect("/login")
             
         except sqlite3.IntegrityError:
@@ -87,6 +91,7 @@ def register():
         except Exception as e:
             # Log the error for debugging and return a generic error response
             print(f"Error during registration: {e}")
+            logger.error(f"error while registering : {e}")
             return apology("An error occurred. Please try again.", 500)
 
     else:
@@ -120,12 +125,15 @@ def login():
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
+            logger.error("User failed to login")
             return apology("invalid username and/or password", 403)
+            
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
+        logger.info("User login sucessfully")
         return redirect("/dashboard")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -141,6 +149,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
+    logger.info("user logout")
     return redirect("/")
 
 @app.route("/dashboard")
@@ -196,6 +205,8 @@ def quizz1():
             db.commit()
             session.pop('score', None)  # Reset score or use session.clear() for all session data
             session.pop('test_size', None)  # Reset any other session data
+
+            logger.info("score registered in the database successfully")
           
             return render_template("dashboard.html", score=score)
 
@@ -259,12 +270,14 @@ def pswd_change():
             db.execute("UPDATE users SET hash = ? WHERE id = ?", (hash, user_id["id"],))
             db.commit()
             logout()
+            logger.info("user password changed successfully")
             return redirect("/")
             
             
 
         except Exception as e:
             print(f"Exception: {e}")
+            logger.error(f"error while changing password : {e}")
             return apology("Error", 403)
 
     return render_template("change_pswd.html")
@@ -305,10 +318,13 @@ def delete_account():
             db.execute("DELETE FROM users WHERE id=?",(session["user_id"],))
             db.commit()
             session.clear()
+            logger.info("User account deleted sucessfully")
             return redirect("/")
         
         except:
+            logger.error ("Failed to delete account")
             return apology("account was not deleted",400)
+
 
         
 
@@ -367,6 +383,7 @@ def quizz2():
             db.commit()
             session.pop('score', None)  # Reset score or use session.clear() for all session data
             session.pop('test_size', None)  # Reset any other session data
+            logger.info("score registered in the database successfully")
           
             return render_template("dashboard.html", score=score2)
 
@@ -444,6 +461,7 @@ def quizz3():
             db.commit()
             session.pop('score', None)  # Reset score or use session.clear() for all session data
             session.pop('test_size', None)  # Reset any other session data
+            logger.info("score registered in the database successfully")
           
             return render_template("dashboard.html", score=score3)
 
