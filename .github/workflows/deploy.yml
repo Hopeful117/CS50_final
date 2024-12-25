@@ -27,11 +27,11 @@ jobs:
 
       - name: Copy files to the server
         run: |
-          scp -r ./ ludo@192.168.1.29:/var/www/DLL/CS50_final
+          scp -r ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
 
       - name: SSH into the server and restart services
         run: |
-          ssh -o StrictHostKeyChecking=no ludo@hopeserver << 'EOF'
+          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
             cd /var/www/DLL/CS50_final
             source venv/bin/activate
             # Assurez-vous que vous redémarrez le service Gunicorn ou Nginx si nécessaire
