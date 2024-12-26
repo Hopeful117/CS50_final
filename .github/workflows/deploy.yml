@@ -8,7 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest  # Exécute le job sur une machine virtuelle Ubuntu
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -18,27 +18,24 @@ jobs:
         with:
           python-version: '3.11'
           
-          # Utiliser la version Python de votre choix
-
-      - name: Remove old virtual environment
+      - name: Remove old virtual environment if it exists
         run: |
-            if [ -d "venv" ]; then
-              rm -rf venv  # Supprime le dossier venv existant
+            if [ -d "/var/www/DLL/CS50_final/venv" ]; then
+              rm -rf /var/www/DLL/CS50_final/venv  # Supprime le dossier venv existant
             fi
 
       - name: Create virtual environment
         run: |
-              python -m venv venv  # Crée un environnement virtuel dans le dossier 'venv'
-              source venv/bin/activate  # Active l'environnement virtuel
-    
+            cd /var/www/DLL/CS50_final
+            python3 -m venv venv  # Crée l'environnement virtuel dans le bon répertoire
+            source venv/bin/activate  # Active l'environnement virtuel
 
       - name: Install dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          
-          pip install --upgrade pip
-          pip install -r requirements.txt
+            cd /var/www/DLL/CS50_final
+            source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
@@ -47,19 +44,17 @@ jobs:
 
       - name: Add known_hosts
         run: |
-          ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
-      
+            ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
 
       - name: Install rsync
         run: |
             sudo apt-get update
             sudo apt-get install -y rsync
-      
+
       - name: Deploy via rsync
         run: |
             rsync -avz --no-perms --delete ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
 
-      
       - name: SSH into the server and restart services
         run: |
           ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org << 'EOF'
