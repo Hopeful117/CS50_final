@@ -17,6 +17,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+  
+      - name: Add known_hosts
+        run: |
+              ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
           
       - name: Remove old virtual environment if it exists
         run: |
@@ -41,14 +50,7 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Add known_hosts
-        run: |
-            ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
+      
 
       - name: Install rsync
         run: |
