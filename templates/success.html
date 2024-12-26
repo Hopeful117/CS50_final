@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Success
+{% endblock %}
+
+{% block content %}
+<div class="apology">
+   <div>
+      <img src="{{url_for('static',filename='success.jpeg')}}">
+   </div>
+   <div>
+      <button class="btn-next"><a href="/login">login</a></button>
+   </div>
+</div>
+{% endblock %}
