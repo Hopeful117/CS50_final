@@ -29,6 +29,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add known_hosts
+        run: |
+          ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
       
 
       - name: Install rsync
