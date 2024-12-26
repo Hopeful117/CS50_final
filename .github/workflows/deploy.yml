@@ -42,7 +42,7 @@ jobs:
       
       - name: Deploy via rsync
         run: |
-            rsync -avz --delete ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
+            rsync -avz --no-perms --delete ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
 
       
       - name: SSH into the server and restart services
