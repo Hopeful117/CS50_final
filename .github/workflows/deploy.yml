@@ -27,14 +27,14 @@ jobs:
         run: |
               ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
           
-      - name: Check if virtual environment exists
+      - name: Ensure virtual environment exists
         run: |
             ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
               if [ ! -d "/var/www/DLL/CS50_final/venv" ]; then
-                echo "Environment not found. Creating virtual environment..."
+                echo "Virtual environment not found, creating it..."
                 python3 -m venv /var/www/DLL/CS50_final/venv  # Crée l'environnement virtuel si inexistant
               else
-                echo "Environment already exists. Skipping creation."
+                echo "Virtual environment exists, skipping creation."
               fi
             EOF
 
@@ -44,7 +44,7 @@ jobs:
               cd /var/www/DLL/CS50_final
               source venv/bin/activate
               pip install --upgrade pip
-              pip install -r requirements.txt  # Installe les dépendances ou les met à jour
+              pip install -r requirements.txt  # Installe ou met à jour les dépendances
             EOF
 
       - name: Install rsync
