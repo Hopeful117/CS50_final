@@ -108,4 +108,56 @@ lesson3 = {
 
 
 
+lesson4 = {
+    "Amis": {
+        "translations": "Friends",
+        "pronunciation": "audio/amis.mp3",
+        "context": "People you spend time with and share mutual affection."
+    },
+    "Famille": {
+        "translations": "Family",
+        "pronunciation": "audio/famille.mp3",
+        "context": "A group consisting of parents and children, or all descendants of a common ancestor."
+    },
+    "Travail": {
+        "translations": "Work",
+        "pronunciation": "audio/travail.mp3",
+        "context": "An activity involving mental or physical effort done to achieve a result."
+    },
+    "École": {
+        "translations": "School",
+        "pronunciation": "audio/ecole.mp3",
+        "context": "An institution for educating children or a place where learning occurs."
+    },
+    "Temps": {
+        "translations": "Time",
+        "pronunciation": "audio/temps.mp3",
+        "context": "A measurable period during which an action, process, or condition exists or continues."
+    },
+    "Ville": {
+        "translations": "City",
+        "pronunciation": "audio/ville.mp3",
+        "context": "A large town or a populated area with various services and infrastructure."
+    },
+    "Musique": {
+        "translations": "Music",
+        "pronunciation": "audio/musique.mp3",
+        "context": "The art of arranging sounds in time to produce a composition."
+    },
+    "Nourriture": {
+        "translations": "Food",
+        "pronunciation": "audio/nourriture.mp3",
+        "context": "While there is several words that translate to food in everyday language we dont really use them, we use 'à manger' which is equivalent to 'something to eat' "
+    },
+    "Je t'aime": {
+        "translations": "I Love you",
+        "pronunciation": "audio/love.mp3",
+        "context": "A way to express love informally."
+    },
+    "Rien": {
+        "translations": "Nothing",
+        "pronunciation": "audio/rien.mp3",
+        "context": "Terme utilisé pour indiquer l'absence de quelque chose."
+    }
+}
 

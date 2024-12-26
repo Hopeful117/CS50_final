@@ -274,6 +274,7 @@ margin: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 table {
@@ -413,7 +414,7 @@ footer
     display:flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     word-break: break-all;
 }
 

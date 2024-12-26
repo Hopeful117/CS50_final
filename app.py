@@ -5,7 +5,7 @@ import sqlite3
 import random
 from flask import Flask, flash, redirect, render_template, request, session,g, jsonify
 from flask_session import Session
-from data import lesson1,lesson2,lesson3
+from data import lesson1,lesson2,lesson3,lesson4
 from logging_config import setup_logger
 
 
@@ -83,7 +83,7 @@ def register():
             db.commit()
             flash("Registration successful ! Please log in", category="success")
             logger.info("User registered sucessfully")
-            return redirect("/login")
+            return redirect("/success")
             
         except sqlite3.IntegrityError:
             # Handle duplicate usernames gracefully
@@ -271,7 +271,7 @@ def pswd_change():
             db.commit()
             logout()
             logger.info("user password changed successfully")
-            return redirect("/")
+            return redirect("/success")
             
             
 
@@ -319,7 +319,7 @@ def delete_account():
             db.commit()
             session.clear()
             logger.info("User account deleted sucessfully")
-            return redirect("/")
+            return redirect("/success")
         
         except:
             logger.error ("Failed to delete account")
@@ -486,6 +486,23 @@ def quizz3():
     return render_template("quizz3.html" ,question=question, answers=answers, score=score3,french=french,english=english)
 
 
+
+@app.route("/lesson4", methods=["GET", "POST"])
+@login_required
+def lesson4_page():
+    
+   
+
+    return render_template("lesson4.html",vocabulary=lesson4)
+
+
+@app.route("/success", methods=["GET", "POST"])
+
+def success():
+    
+   
+
+    return render_template("success.html")
 
 
 
