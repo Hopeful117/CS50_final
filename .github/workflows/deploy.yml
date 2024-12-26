@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Exécute le job sur une machine virtuelle Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -25,16 +25,16 @@ jobs:
       - name: Deploy using Git
         run: |
           ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
-            # Naviguer dans le dépôt sur le serveur
             cd /var/www/DLL/CS50_final
-            # Récupérer les dernières modifications du dépôt GitHub
+            # Récupérer les dernières modifications
             git pull origin main
-            # Assurez-vous que les permissions sont correctes si nécessaire
-            chmod -R u+rwx /var/www/DLL/CS50_final
-            # Mettre à jour l'environnement virtuel et installer les dépendances
+            # Créer ou activer l'environnement virtuel
+            if [ ! -d "venv" ]; then
+              python3 -m venv venv
+            fi
             source venv/bin/activate
             pip install --upgrade pip
-            pip install -r requirements.txt
+            pip install -r requirements.txt --break-system-packages
             # Redémarrer les services
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
