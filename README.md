@@ -1,35 +1,110 @@
-# CS50_final
-## Duck language learning
+# Duck Language Learning  
+## Learn French with Interactive Lessons and Quizzes  
 
+Duck Language Learning is a CS50x final project built with Flask. The app helps users learn basic French through interactive lessons, quizzes, and audio exercises. User data is stored in a SQLite database.
 
-### Duck language learning is a CS50x final project built in Flask. Users datas are stored in a SQLite database. The goal of the app is to teach French at a basic level with a mix of vocabulary and quizzes and more general lessons. 
-### Before accessing lessons users are required to register using the Register link on the top right corner of the page.
-### After registering users should login using their credientials to access the dashboard menu. They should then access the lesson they desire to take which contains audio sample to help with pronunciation.They should then access the quiz corresponding to the lesson by clicking the button below the lesson or directly from the dashboard. All the result of the test can be accessed in the account menu by clicking on the scoreboard button. In the same menu users can change their password and delete their account should they desire so. Deleting account is not reversible and remove all the user data from the database.
+## Introduction
+ 
+ - **Why a french language learning app**
+ French is the 5th most spoken language in the world and trade relationship between France and the United States is strong and continues to grow.
+ In 2023, exchanges continued to grow, reaching €167.4 billion, including €97 billion for goods and €70.4 billion for services. (diplomatie.gouv.fr). Reciprocal investments between the two countries totaled $406 billion in 2022. The United States remains the primary destination for French investments abroad and is the leading foreign investor in France. (washington.consulfrance.org). The French-American economic partnership has created over 1.2 million jobs. Yet, a lot of those opportunities are lost because, let's be honest a lot of people in France struggle with English even if they have taken it as the primary foreign language in school. So why not create a bridge and meet each other halfway through.
 
-### The app is self hosted on a Debian 12 server using nginx,gunicorn and a free duckdns.org domain and can be accessed at ducklanguagelearning.duckdns.org
+ - **My experience creating this project**
+ One of the first challenge I encountered was the sqlite database. I realized very quickly that the CS50 environment did a lot of work for us behind the scene and things worked differently in a real development environment. The second one was how to handle session. While we encounter sessions in the final problem set, everything is done for us and I wasn't quite sure how things worked and I'm still a bit confused to be honest. The last and probably the most challenging part was the self hosting and the automated deployment process. While I had the server set up and ready to go before starting CS50, this is the first website I actually self host. The automated process was written entirely by Chat-GPT but I had to spend a lot of time debugging to make things work properly. From a more general point of view I still struggle a bit with dictionary and list of dictionary syntax but make this project helped me quite a lot. I had a lot of fun creating it and I will keep working on it after CS50.
+    
 
-### The static folder contains all the audio samples used by the app as well as the images and icons. The style.css file works with the Html file to format them correcty. The media query ensure the app looks good both on computer and mobile.
-### The templates folder contains all the html files of the app. All the files are extensions of the layout.html files that contains the layout of the app which all other files uses using jinja to add to this layout. Some of the content of those html files is generated with jinja from the app.py file.
-### The app.py is the file that contains all the logic of the app. The python library we used are imported on this file such as Flask,Flask_session,werkzeug_security,sqlite3... Each route in the file is linked to an HTML page. The Flask session library allow to store temporary data such as the name of the user, it's current score in the quizzes.All those data can be cleared using the function session.clear.The werkzeug_security library allow to generate hashes to safely store user password in database. It's check_password_hash function allow to compare those hashes to the password the user enter while login in.
+## Key Features  
 
-### The data.py file contains dictionnary used by the lesson to save space in the app.py file.
-### Duck.db is the sqlite3 database. It contains 2 tables, One to store users usernames and hashed password, each users being associated with a unique id, two a quizz result table which store all results from quizzes.All results are associated with user id from the users table to prevent repetition as much as possible.
+- **Secure Registration and Login:**  
+  Users must register via the "Register" link to access lessons. Once registered, they can log in and access the dashboard.  
+- **Interactive Lessons:**  
+  Each lesson includes vocabulary and audio samples to aid pronunciation.  
+- **Quizzes:**  
+  Users can test their knowledge through quizzes linked to each lesson, accessible from the lesson page or directly from the dashboard.  
+- **Score Tracking:**  
+  Quiz scores are viewable on the "Scoreboard" in the account menu.  
+- **Account Management:**  
+  Users can change their password or delete their account. Deleting an account is irreversible and removes all associated data from the database.  
 
-### The helper.py file contains functions from the Finance problem. Some of the code from this app is reused from my version of the finance problem set.
+---
 
-### The logging_config.py manages how the app log how the app behave. In developpement we can use the app.log to identify issues and in production we will have access to the gunicorn logs as well to monitor the apps.
+## Hosting  
 
-### The requirement.txt file allow to automatically install dependencies in productions.
+The app is self-hosted on a Debian 12 server with:  
+- **Web Server:** Nginx  
+- **Application Server:** Gunicorn  
+- **Domain:** Free DuckDNS service  
+- **Access:** [ducklanguagelearning.duckdns.org](http://ducklanguagelearning.duckdns.org)  
 
-### The Github workflows file automatically deploy updates in the production server after every push to the github repository.gi
+---
 
+## Project Structure  
 
+### Main Files and Folders  
 
+- **`/static`**  
+  Contains audio files, images, icons, and the `style.css` file. Media queries ensure a responsive design for both desktop and mobile.  
+- **`/templates`**  
+  Contains HTML files structured with `layout.html` as the base template, extended dynamically using Jinja2.  
+- **`app.py`**  
+  The main application logic, Flask routes, and session management. Key libraries include:  
+  - Flask  
+  - Flask-Session (for session management)  
+  - Werkzeug-Security (for password hashing and verification)  
+  - SQLite3 (for database operations).  
+- **`data.py`**  
+  Contains dictionaries used for lessons to keep `app.py` lightweight.  
+- **`duck.db`**  
+  SQLite database with two tables:  
+  1. **Users:** Stores unique IDs, usernames, and hashed passwords.  
+  2. **Quiz Results:** Stores quiz scores linked to user IDs from the Users table.  
+- **`helper.py`**  
+  Includes utility functions adapted from the CS50 Finance problem set.  
+- **`logging_config.py`**  
+  Configures logging for tracking app behavior during development and production.  
+- **`requirements.txt`**  
+  Lists dependencies for automated installation in production.  
 
-### Image generated with Microsoft Bing.
-### Audio files generated with ttsmaker.com.
-### CHAT GPT to assist with problem solving.
-### Nav bar from Bootstrap.
-### Gradient generated with CSS Gradient.
-### Font Playwrite Colombia from google font.
-### SSL certificate from Let's Encrypt
+---
+
+## Automation and Tools  
+
+- **Continuous Deployment:**  
+  Updates are automatically deployed using GitHub Actions after every push to the main repository.  
+- **SSL Certificate:**  
+  Let's Encrypt secures the domain with HTTPS.  
+- **External Resources:**  
+  - Navigation Bar: Bootstrap  
+  - Gradients: CSS Gradient  
+  - Font: Playfair Display (Google Fonts)  
+  - Audio Files: ttsmaker.com  
+  - Image Generation: Microsoft Bing  
+
+---
+
+## Development and Maintenance  
+
+### Logging  
+
+- **Development:** Logs are available in `app.log`.  
+- **Production:** Gunicorn logs are available for monitoring app behavior.  
+
+---
+
+## Credits  
+
+- **ChatGPT:** Assistance with problem-solving and creating the automated deployement process.  
+- **CS50 Problems:** Certain functions are adapted from CS50 problem sets, particularly the Finance problem.  
+
+---
+
+## Contact  
+
+Feel free to reach out if you have suggestions or would like to contribute!  
+[Email me here.](mailto:ludovic.brot@gmail.com)  
+
+---  
+
+### Notes  
+
+This README has been improved for clarity, structure, and formatting. Let me know if you have additional feedback or need further modifications!  
