@@ -32,10 +32,16 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H hopeful117.duckdns.org >> ~/.ssh/known_hosts
 
-      - name: Copy files to the server
+      - name: Install rsync
         run: |
-          scp -r ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
+            sudo apt-get update
+            sudo apt-get install -y rsync
+      
+      - name: Deploy via rsync
+        run: |
+            rsync -avz --delete ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
 
+      
       - name: SSH into the server and restart services
         run: |
           ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
