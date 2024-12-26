@@ -20,15 +20,19 @@ jobs:
           
       - name: Remove old virtual environment if it exists
         run: |
-            if [ -d "/var/www/DLL/CS50_final/venv" ]; then
-              rm -rf /var/www/DLL/CS50_final/venv  # Supprime le dossier venv existant
-            fi
+            ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org <<EOF
+              if [ -d "/var/www/DLL/CS50_final/venv" ]; then
+                rm -rf /var/www/DLL/CS50_final/venv  # Supprime le dossier venv existant
+              fi
+            EOF
+        
 
       - name: Create virtual environment
         run: |
+           ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org << 'EOF'
             cd /var/www/DLL/CS50_final
-            python3 -m venv venv  # Crée l'environnement virtuel dans le bon répertoire
-            source venv/bin/activate  # Active l'environnement virtuel
+            python3 -m venv venv  # Crée l'environnement virtuel
+            EOF
 
       - name: Install dependencies
         run: |
