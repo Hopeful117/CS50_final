@@ -1,0 +1,16 @@
+# Ignorer l'environnement virtuel Python
+venv/
+
+# Ignorer les fichiers .pyc (fichiers compilés Python)
+__pycache__/
+*.pyc
+
+# Ignorer les fichiers de configuration de l'éditeur de texte
+.vscode/
+.idea/
+
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer les fichiers de tests temporaires
+*.tmp
