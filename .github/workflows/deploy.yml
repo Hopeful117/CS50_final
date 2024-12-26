@@ -27,18 +27,20 @@ jobs:
         run: |
               ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
           
-      - name: Ensure virtual environment exists
+      - name: Ensure virtual environment exists on the server
         run: |
             ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
+              # Vérifier si le répertoire venv existe, sinon le créer
               if [ ! -d "/var/www/DLL/CS50_final/venv" ]; then
                 echo "Virtual environment not found, creating it..."
-                python3 -m venv /var/www/DLL/CS50_final/venv  # Crée l'environnement virtuel si inexistant
+                cd /var/www/DLL/CS50_final
+                python3 -m venv venv  # Crée l'environnement virtuel
               else
-                echo "Virtual environment exists, skipping creation."
+                echo "Virtual environment already exists, skipping creation."
               fi
             EOF
 
-      - name: Install or Update dependencies
+      - name: Install or Update dependencies on the server
         run: |
             ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
               cd /var/www/DLL/CS50_final
@@ -58,7 +60,7 @@ jobs:
 
       - name: SSH into the server and restart services
         run: |
-          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
+          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
             cd /var/www/DLL/CS50_final
             source venv/bin/activate
             sudo systemctl restart gunicorn
