@@ -29,28 +29,27 @@ jobs:
           
       - name: Remove old virtual environment if it exists
         run: |
-            ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org <<EOF
+            ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
               if [ -d "/var/www/DLL/CS50_final/venv" ]; then
                 rm -rf /var/www/DLL/CS50_final/venv  # Supprime le dossier venv existant
               fi
             EOF
-        
 
       - name: Create virtual environment
         run: |
-           ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org <<EOF
-            cd /var/www/DLL/CS50_final
-            python3 -m venv venv  # Crée l'environnement virtuel
+            ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
+              cd /var/www/DLL/CS50_final
+              python3 -m venv venv  # Crée l'environnement virtuel
             EOF
 
       - name: Install dependencies
         run: |
-            cd /var/www/DLL/CS50_final
-            source venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements.txt
-
-      
+            ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
+              cd /var/www/DLL/CS50_final
+              source venv/bin/activate
+              pip install --upgrade pip
+              pip install -r requirements.txt
+            EOF
 
       - name: Install rsync
         run: |
@@ -63,10 +62,9 @@ jobs:
 
       - name: SSH into the server and restart services
         run: |
-          ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org << 'EOF'
+          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
             cd /var/www/DLL/CS50_final
             source venv/bin/activate
-            # Assurez-vous que vous redémarrez le service Gunicorn ou Nginx si nécessaire
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
           EOF
