@@ -47,7 +47,7 @@ jobs:
       
       - name: SSH into the server and restart services
         run: |
-          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
+          ssh -o StrictHostKeyChecking=no -t ludo@hopeful117.duckdns.org << 'EOF'
             cd /var/www/DLL/CS50_final
             source venv/bin/activate
             # Assurez-vous que vous redémarrez le service Gunicorn ou Nginx si nécessaire
