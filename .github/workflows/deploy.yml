@@ -12,59 +12,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.11'
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-  
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Add known_hosts
         run: |
-              ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
-          
-      - name: Ensure virtual environment exists on the server
-        run: |
-            ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
-              # Vérifier si le répertoire venv existe, sinon le créer
-              if [ ! -d "/var/www/DLL/CS50_final/venv" ]; then
-                echo "Virtual environment not found, creating it..."
-                cd /var/www/DLL/CS50_final
-                python3 -m venv venv  # Crée l'environnement virtuel
-              else
-                echo "Virtual environment already exists, skipping creation."
-              fi
-            EOF
+          ssh-keyscan hopeful117.duckdns.org >> ~/.ssh/known_hosts
 
-      - name: Install or Update dependencies on the server
+      - name: Deploy using Git
         run: |
-            ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
-              cd /var/www/DLL/CS50_final
-              source venv/bin/activate
-              pip install --upgrade pip
-              pip install -r requirements.txt  # Installe ou met à jour les dépendances
-            EOF
-
-      - name: Install rsync
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y rsync
-
-      - name: Deploy via rsync
-        run: |
-            rsync -avz --no-perms --delete ./ ludo@hopeful117.duckdns.org:/var/www/DLL/CS50_final
-
-      - name: SSH into the server and restart services
-        run: |
-          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org <<EOF
+          ssh -o StrictHostKeyChecking=no ludo@hopeful117.duckdns.org << 'EOF'
+            # Naviguer dans le dépôt sur le serveur
             cd /var/www/DLL/CS50_final
+            # Récupérer les dernières modifications du dépôt GitHub
+            git pull origin main
+            # Assurez-vous que les permissions sont correctes si nécessaire
+            chmod -R u+rwx /var/www/DLL/CS50_final
+            # Mettre à jour l'environnement virtuel et installer les dépendances
             source venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            # Redémarrer les services
             sudo systemctl restart gunicorn
             sudo systemctl restart nginx
           EOF
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
