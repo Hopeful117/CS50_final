@@ -16,7 +16,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.11'  # Utiliser la version Python de votre choix
+          python-version: '3.11'
+          
+          # Utiliser la version Python de votre choix
+
+      - name: Remove old virtual environment
+        run: |
+            if [ -d "venv" ]; then
+              rm -rf venv  # Supprime le dossier venv existant
+            fi
+
+      - name: Create virtual environment
+        run: |
+              python -m venv venv  # Crée un environnement virtuel dans le dossier 'venv'
+              source venv/bin/activate  # Active l'environnement virtuel
+    
 
       - name: Install dependencies
         run: |
