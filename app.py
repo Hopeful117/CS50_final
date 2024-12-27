@@ -90,7 +90,7 @@ def register():
             return apology("username already exists", 400)
         except Exception as e:
             # Log the error for debugging and return a generic error response
-            print(f"Error during registration: {e}")
+          
             logger.error(f"error while registering : {e}")
             return apology("An error occurred. Please try again.", 500)
 
@@ -440,9 +440,7 @@ def quizz3():
 
         # Vérifie si la réponse est correcte
         correct_answer = question
-        print(question)
-        print(selected_answer)
-        print(correct_answer)
+       
        
         
         if selected_answer.strip().lower() == correct_answer.strip().lower():
@@ -451,7 +449,7 @@ def quizz3():
         test_size += 1  # Incrémente le nombre de questions
 
         session["score"] = score3
-        print(f"{session['score']}")
+    
         session["test_size"] = test_size
         
 
@@ -503,6 +501,67 @@ def success():
    
 
     return render_template("success.html")
+
+
+
+@app.route("/quizz4", methods=["GET", "POST"])
+@login_required
+def quizz4():
+    db=get_db()
+    user_id=session.get("user_id")
+    
+    if "score" not in session:
+        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+    if "test_size" not in session:
+        session["test_size"] = 0
+    score4 = session["score"]
+    test_size = session["test_size"]
+
+    
+    
+    
+    if request.method == "POST":
+        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
+        question = session.get("question") 
+
+        # Vérifie si la réponse est correcte
+        correct_answer = lesson4[question]["translation"]
+        
+        if selected_answer.strip().lower() == correct_answer.strip().lower():
+            score4 += 1  # Incrémente le score
+        test_size += 1  # Incrémente le nombre de questions
+
+        session["score"] = score4
+        session["test_size"] = test_size
+
+        # Si 10 questions ont été posées, on affiche le score final
+        if test_size >= 10:
+            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz4", session["score"]))
+            db.commit()
+            session.pop('score', None)  # Reset score or use session.clear() for all session data
+            session.pop('test_size', None)  # Reset any other session data
+            logger.info("score registered in the database successfully")
+          
+            return render_template("dashboard.html", score=score4)
+
+    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
+    question = random.choice(list(lesson4.keys()))
+    session["question"] = question
+    choice2 = random.choice(list(lesson4.keys()))
+    choice3 = random.choice(list(lesson4.keys()))
+    correct_answer = lesson4[question]["translation"]
+    answer2 = lesson4[choice2]["translation"]
+    answer3 = lesson4[choice3]["translation"]
+    
+    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
+    answers = [correct_answer, answer2, answer3]
+    random.shuffle(answers)
+
+    # Envoie la question et les réponses à la page
+
+    
+    
+    return render_template("quizz4.html", question=question, answers=answers, score=score4)
 
 
 
