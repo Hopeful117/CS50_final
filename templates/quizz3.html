@@ -7,10 +7,10 @@ Quizz 3
 
 
 {% block content %}
-<h1 class="title">Quiz 3</h1>
+<h1 class="lesson-title">Quiz 3</h1>
 <div class="questionnaire">
 
-<h2 class="question">{{french}}</h2>
+<h2 class="question word">{{french}}</h2>
 <h3 class="question">{{english}}</h3>
 
 <form method="POST" >
@@ -28,7 +28,7 @@ Quizz 3
     <button type="submit" class="btn-next">Validate</button>
     
 </form> 
-<h2>{{score}}/10</h2>
+<h2 class="word">{{score}}/10</h2>
 </div>
 
 {% endblock %}

@@ -78,7 +78,8 @@ The app is self-hosted on a Debian 12 server with:
   - Gradients: CSS Gradient  
   - Font: Playfair Display (Google Fonts)  
   - Audio Files: ttsmaker.com  
-  - Image Generation: Microsoft Bing  
+  - Image Generation: Microsoft Bing
+  - Switch button from w3schools.com
 
 ---
 
