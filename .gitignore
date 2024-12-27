@@ -14,3 +14,12 @@ __pycache__/
 
 # Ignorer les fichiers de tests temporaires
 *.tmp
+
+# Ignorer la base de donnée
+duck.db
+
+# Ignorer session flask
+flask_session/
+
+# Ignorer log
+app.log
