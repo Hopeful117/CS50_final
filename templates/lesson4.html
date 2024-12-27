@@ -13,7 +13,7 @@ Lesson 4
   <div class="lesson">
     {% for word, details in vocabulary.items() %}
       <div class="vocab-item">
-        <h2>{{ word }}</h2>
+        <h2 class="word">{{ word }}</h2>
         <p>{{ details.translation }}</p>
         <audio controls>
           <source src="{{ url_for('static', filename=details.pronunciation) }}" type="audio/mpeg">
@@ -25,7 +25,7 @@ Lesson 4
   </div>
   <div class="c-button">
   <button class="btn-next">
-    <a href="#">Go to Quizz</a>
+    <a href="/quizz4">Go to Quizz</a>
   </button>
   </div>
 </div>

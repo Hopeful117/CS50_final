@@ -14,7 +14,7 @@ Lesson1
   <div class="lesson">
     {% for word, details in vocabulary.items() %}
       <div class="vocab-item">
-        <h2>{{ word }}</h2>
+        <h2 class="word">{{ word }}</h2>
         <p>{{ details.translation }}</p>
         <audio controls>
           <source src="{{ url_for('static', filename=details.pronunciation) }}" type="audio/mpeg">
