@@ -170,64 +170,94 @@ def lesson1_page():
 @app.route("/quizz1", methods=["GET", "POST"])
 @login_required
 def quizz1():
-    db=get_db()
-    user_id=session.get("user_id")
-  
+    db = get_db()
+    user_id = session.get("user_id")
+    
+    # Initialisation de `copylesson2` en début de fonction
+    if "copylesson1" not in session:
+        session["copylesson1"] = lesson1.copy()
+
+    copylesson1 = session["copylesson1"]
+
+    # Initialisation des variables de session pour le score et la taille du test
     if "score" not in session:
-        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+        session["score"] = 0
     if "test_size" not in session:
         session["test_size"] = 0
-    
-   
-    score = session["score"]
+
+    score1 = session["score"]
     test_size = session["test_size"]
 
+
     
-    
-    
+
     if request.method == "POST":
-        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
-        question = session.get("question") 
+        
+        selected_answer = request.form.get("choice")  # Réponse sélectionnée par l'utilisateur
+        
+        question = session.get("question")  # Question en cours
+        if not selected_answer:
+            logger.error("User didnt select an answer")
+            
+            return redirect("/quizz1")
+
 
         # Vérifie si la réponse est correcte
         correct_answer = lesson1[question]["translation"]
-        
         if selected_answer.strip().lower() == correct_answer.strip().lower():
-            score += 1  # Incrémente le score
-        test_size += 1  # Incrémente le nombre de questions
+            score1 += 1  # Incrémente le score
+        test_size += 1  # Incrémente le nombre de questions posées
 
-        session["score"] = score
+        session["score"] = score1
         session["test_size"] = test_size
 
-        # Si 10 questions ont été posées, on affiche le score final
-        if test_size >= 10:
-            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz1", session["score"]))
+        # Retire la question actuelle de `copylesson2`
+        copylesson1.pop(question)
+
+        # Vérifie si 10 questions ont été posées ou s'il n'y a plus de questions
+        if test_size >= 10 or not copylesson1:
+            db.execute(
+                "INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",
+                (user_id, "quizz1", score1),
+            )
             db.commit()
-            session.pop('score', None)  # Reset score or use session.clear() for all session data
-            session.pop('test_size', None)  # Reset any other session data
 
-            logger.info("score registered in the database successfully")
-          
-            return render_template("dashboard.html", score=score)
+            session["final_score"] = score1
+            session.pop("score")  # Réinitialise le score
+            session.pop("test_size")  # Réinitialise le compteur de questions
+            session.pop("copylesson1")  # Réinitialise `copylesson2`
+            logger.info("session reset sucessful")
+            logger.info("Score registered succesful")
+            return redirect("/score")
 
-    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
-    question = random.choice(list(lesson1.keys()))
+    # Si on est en GET (nouvelle question)
+    if not copylesson1:
+        logger.warning("Quizz didnt reset properly.")
+        return redirect("/score")
+
+    question = random.choice(list(copylesson1.keys()))
     session["question"] = question
-    choice2 = random.choice(list(lesson1.keys()))
-    choice3 = random.choice(list(lesson1.keys()))
+
+    # Génère deux autres choix incorrects aléatoires
+    remaining_keys = [key for key in lesson1.keys() if key != question]
+    if len(remaining_keys) < 2:
+        logger.warning("Quizz didnt reset properly.")
+        return redirect("/score")
+
+    other_choices = random.sample(remaining_keys, 2)
+
+    # Réponses possibles, mélangées aléatoirement
     correct_answer = lesson1[question]["translation"]
-    answer2 = lesson1[choice2]["translation"]
-    answer3 = lesson1[choice3]["translation"]
-    
-    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
-    answers = [correct_answer, answer2, answer3]
+    answers = [
+        correct_answer,
+        lesson1[other_choices[0]]["translation"],
+        lesson1[other_choices[1]]["translation"],
+    ]
     random.shuffle(answers)
 
-    # Envoie la question et les réponses à la page
+    # Affiche la question et les réponses à l'utilisateur
+    return render_template("quizz1.html", question=question, answers=answers, score=score1)
 
-    
-    
-    return render_template("quizz1.html", question=question, answers=answers, score=score)
 
 
 @app.route("/about")
@@ -350,61 +380,89 @@ def lesson2_page():
 @app.route("/quizz2", methods=["GET", "POST"])
 @login_required
 def quizz2():
-    db=get_db()
-    user_id=session.get("user_id")
+    db = get_db()
+    user_id = session.get("user_id")
     
+    # Initialisation de `copylesson2` en début de fonction
+    if "copylesson2" not in session:
+        session["copylesson2"] = lesson2.copy()
+
+    copylesson2 = session["copylesson2"]
+
+    # Initialisation des variables de session pour le score et la taille du test
     if "score" not in session:
-        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+        session["score"] = 0
     if "test_size" not in session:
         session["test_size"] = 0
+
     score2 = session["score"]
     test_size = session["test_size"]
 
-    
-    
-    
     if request.method == "POST":
-        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
-        question = session.get("question") 
+        selected_answer = request.form.get("choice")  # Réponse sélectionnée par l'utilisateur
+        question = session.get("question")  # Question en cours
+
+        if not selected_answer:
+            logger.error("user didnt select an answer ")
+            return redirect("/quizz2")
+
 
         # Vérifie si la réponse est correcte
         correct_answer = lesson2[question]["translation"]
-        
         if selected_answer.strip().lower() == correct_answer.strip().lower():
             score2 += 1  # Incrémente le score
-        test_size += 1  # Incrémente le nombre de questions
+        test_size += 1  # Incrémente le nombre de questions posées
 
         session["score"] = score2
         session["test_size"] = test_size
 
-        # Si 10 questions ont été posées, on affiche le score final
-        if test_size >= 10:
-            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz2", session["score"]))
-            db.commit()
-            session.pop('score', None)  # Reset score or use session.clear() for all session data
-            session.pop('test_size', None)  # Reset any other session data
-            logger.info("score registered in the database successfully")
-          
-            return render_template("dashboard.html", score=score2)
+        # Retire la question actuelle de `copylesson2`
+        copylesson2.pop(question)
 
-    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
-    question = random.choice(list(lesson2.keys()))
+        # Vérifie si 10 questions ont été posées ou s'il n'y a plus de questions
+        if test_size >= 10 or not copylesson2:
+            db.execute(
+                "INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",
+                (user_id, "quizz2", score2),
+            )
+            db.commit()
+
+            session["final_score"] = score2
+            session.pop("score")  # Réinitialise le score
+            session.pop("test_size")  # Réinitialise le compteur de questions
+            session.pop("copylesson2")  # Réinitialise `copylesson2`
+            logger.info("session reset successful")
+            logger.info("Score registered successfully")
+            return redirect("/score")
+
+    # Si on est en GET (nouvelle question)
+    if not copylesson2:
+        logger.warning("quizz didnt reset properly")
+        return redirect("/score")
+
+    question = random.choice(list(copylesson2.keys()))
     session["question"] = question
-    choice2 = random.choice(list(lesson2.keys()))
-    choice3 = random.choice(list(lesson2.keys()))
+
+    # Génère deux autres choix incorrects aléatoires
+    remaining_keys = [key for key in lesson2.keys() if key != question]
+    if len(remaining_keys) < 2:
+        logger.warning("Quizz didnt reset properly")
+        return redirect("/score")
+
+    other_choices = random.sample(remaining_keys, 2)
+
+    # Réponses possibles, mélangées aléatoirement
     correct_answer = lesson2[question]["translation"]
-    answer2 = lesson2[choice2]["translation"]
-    answer3 = lesson2[choice3]["translation"]
-    
-    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
-    answers = [correct_answer, answer2, answer3]
+    answers = [
+        correct_answer,
+        lesson2[other_choices[0]]["translation"],
+        lesson2[other_choices[1]]["translation"],
+    ]
     random.shuffle(answers)
 
-    # Envoie la question et les réponses à la page
-
-    
-    
+    # Affiche la question et les réponses à l'utilisateur
     return render_template("quizz2.html", question=question, answers=answers, score=score2)
+
 
 
 
@@ -416,72 +474,107 @@ def lesson3_page():
 
     return render_template("lesson3.html")
 
-@app.route("/quizz3", methods=["GET","POST"])
+@app.route("/quizz3", methods=["GET", "POST"])
 @login_required
 def quizz3():
-    db=get_db()
-    user_id=session.get("user_id")
-    
+    db = get_db()
+    user_id = session.get("user_id")
+    if "copylesson3" not in session:
+        session["copylesson3"] = lesson3.copy()
+
+    copylesson3 = session["copylesson3"]
+
+
+    # Initialisation des variables de session pour le score et la taille du test
     if "score" not in session:
-        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+        session["score"] = 0
     if "test_size" not in session:
         session["test_size"] = 0
 
     score3 = session["score"]
     test_size = session["test_size"]
 
-    
-    
-    
+
     if request.method == "POST":
-        
-        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
-        question = session.get("question") 
+        selected_answer = request.form.get("choice")  # Réponse sélectionnée par l'utilisateur
+        question = session.get("question")  # Question en cours (la clé correcte)
+        if not selected_answer:
+            logger.error("user didnt select an answer")
+            
+            return redirect("/quizz3")
+
 
         # Vérifie si la réponse est correcte
-        correct_answer = question
-       
-       
-        
-        if selected_answer.strip().lower() == correct_answer.strip().lower():
-           
-            score3=score3+1  # Incrémente le score
-        test_size += 1  # Incrémente le nombre de questions
+        if selected_answer.strip().lower() == question.strip().lower():
+            score3 += 1  # Incrémente le score si la réponse est correcte
+        test_size += 1  # Incrémente le compteur de questions posées
 
         session["score"] = score3
-    
         session["test_size"] = test_size
+        copylesson3.pop(question)
+
+
+        # Si 10 questions ont été posées, enregistrer le score final et rediriger
+        if test_size >= 10 or not copylesson3:
+            try:
+                db.execute(
+                    "INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",
+                    (user_id, "quizz3", score3),
+                )
+                db.commit()
+                logger.info("score registered succesfully")
+            
+            except Exception as e:
+                logger.error(f"Error while recording score: {e}")
+
+
+            try: 
+                session["final_score"] = score3
+                session.pop("score")  # Réinitialise le score
+                session.pop("test_size")  # Réinitialise le compteur de questions
+                session.pop("copylesson3")  # Réinitialise le quiz
+                session.pop("question")  # Réinitialise la question en cours
+                logger.info("session reset sucessful")
+                
+
+                return redirect("/score")
         
+            except Exception as e:
+                logger.error(f"Error while Resetting session: {e}")
 
-        # Si 10 questions ont été posées, on affiche le score final
-        if test_size >= 10:
-            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz3", session["score"]))
-            db.commit()
-            session.pop('score', None)  # Reset score or use session.clear() for all session data
-            session.pop('test_size', None)  # Reset any other session data
-            logger.info("score registered in the database successfully")
-          
-            return render_template("dashboard.html", score=score3)
 
-    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
-    question = random.choice(list(lesson3.keys()))
-    french= lesson3[question]["french_sentence"]
-    english=lesson3[question]["english_sentence"]
+    # Si on est en GET (nouvelle question)
+    if not copylesson3:
+        logger.warning("Quizz was not reset properly")
+        
+        
+        return redirect("/score")
+    question = random.choice(list(copylesson3.keys()))  # La bonne réponse est la clé
+    french = lesson3[question]["french_sentence"]  # Phrase en français
+    english = lesson3[question]["english_sentence"]  # Phrase en anglais
     session["question"] = question
-    choice2 = random.choice(list(lesson3.keys()))
-    choice3 = random.choice(list(lesson3.keys()))
-    correct_answer = question
-    answer2 = choice2
-    answer3 = choice3
-    
-    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
-    answers = [correct_answer, answer2, answer3]
+
+    # Génère deux autres choix incorrects aléatoires
+    remaining_keys = [key for key in lesson3.keys() if key != question]
+    if len(remaining_keys) < 2:
+        logger.warning("Quizz was not reset properly")
+        return redirect("/score")
+
+    other_choices = random.sample(remaining_keys, 2)
+
+    # Réponses possibles, mélangées aléatoirement
+    answers = [question, other_choices[0], other_choices[1]]
     random.shuffle(answers)
 
-    # Envoie la question et les réponses à la page
-
-
-    return render_template("quizz3.html" ,question=question, answers=answers, score=score3,french=french,english=english)
+    # Affiche la question et les réponses à l'utilisateur
+    return render_template(
+        "quizz3.html",
+        question=question,
+        answers=answers,
+        score=score3,
+        french=french,
+        english=english,
+    )
 
 
 
@@ -507,61 +600,102 @@ def success():
 @app.route("/quizz4", methods=["GET", "POST"])
 @login_required
 def quizz4():
-    db=get_db()
-    user_id=session.get("user_id")
+    db = get_db()
+    user_id = session.get("user_id")
     
+    # Initialisation de `copylesson2` en début de fonction
+    if "copylesson4" not in session:
+        session["copylesson4"] = lesson4.copy()
+
+    copylesson4 = session["copylesson4"]
+
+    # Initialisation des variables de session pour le score et la taille du test
     if "score" not in session:
-        session["score"] = 0  # Initialisation uniquement si la clé n'existe pas
+        session["score"] = 0
     if "test_size" not in session:
         session["test_size"] = 0
-    score4 = session["score"]
+
+    score4= session["score"]
     test_size = session["test_size"]
 
-    
-    
-    
     if request.method == "POST":
-        selected_answer = request.form.get("choice")  # Récupère la réponse sélectionnée
-        question = session.get("question") 
+        selected_answer = request.form.get("choice")  # Réponse sélectionnée par l'utilisateur
+        question = session.get("question")  # Question en cours
+        if not selected_answer:
+            logger.error("user didnt select an answer")
+            
+            return redirect("/quizz4")
 
         # Vérifie si la réponse est correcte
         correct_answer = lesson4[question]["translation"]
-        
         if selected_answer.strip().lower() == correct_answer.strip().lower():
             score4 += 1  # Incrémente le score
-        test_size += 1  # Incrémente le nombre de questions
+        test_size += 1  # Incrémente le nombre de questions posées
 
         session["score"] = score4
         session["test_size"] = test_size
 
-        # Si 10 questions ont été posées, on affiche le score final
-        if test_size >= 10:
-            db.execute("INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",(user_id, "quizz4", session["score"]))
-            db.commit()
-            session.pop('score', None)  # Reset score or use session.clear() for all session data
-            session.pop('test_size', None)  # Reset any other session data
-            logger.info("score registered in the database successfully")
-          
-            return render_template("dashboard.html", score=score4)
+        # Retire la question actuelle de `copylesson2`
+        copylesson4.pop(question)
 
-    # Si on est en GET (c'est-à-dire qu'on commence un nouveau quiz)
-    question = random.choice(list(lesson4.keys()))
+        # Vérifie si 10 questions ont été posées ou s'il n'y a plus de questions
+        if test_size >= 10 or not copylesson4:
+            db.execute(
+                "INSERT INTO quiz_results (user_id, quiz_name, score) VALUES (?, ?, ?)",
+                (user_id, "quizz4", score4),
+            )
+            db.commit()
+
+            session["final_score"] = score4
+            session.pop("score")  # Réinitialise le score
+            session.pop("test_size")  # Réinitialise le compteur de questions
+            session.pop("copylesson4")  # Réinitialise `copylesson2`
+
+            logger.info("Score enregistré dans la base de données avec succès")
+            return redirect("/score")
+
+    # Si on est en GET (nouvelle question)
+    if not copylesson4:
+        logger.warning("Aucune question restante pour ce quiz.")
+        return redirect("/score")
+
+    question = random.choice(list(copylesson4.keys()))
     session["question"] = question
-    choice2 = random.choice(list(lesson4.keys()))
-    choice3 = random.choice(list(lesson4.keys()))
+
+    # Génère deux autres choix incorrects aléatoires
+    remaining_keys = [key for key in lesson4.keys() if key != question]
+    if len(remaining_keys) < 2:
+        logger.warning("Pas assez de choix incorrects disponibles.")
+        return redirect("/score")
+
+    other_choices = random.sample(remaining_keys, 2)
+
+    # Réponses possibles, mélangées aléatoirement
     correct_answer = lesson4[question]["translation"]
-    answer2 = lesson4[choice2]["translation"]
-    answer3 = lesson4[choice3]["translation"]
-    
-    # Mélange les réponses pour ne pas afficher la bonne toujours en premier
-    answers = [correct_answer, answer2, answer3]
+    answers = [
+        correct_answer,
+        lesson4[other_choices[0]]["translation"],
+        lesson4[other_choices[1]]["translation"],
+    ]
     random.shuffle(answers)
 
-    # Envoie la question et les réponses à la page
-
-    
-    
+    # Affiche la question et les réponses à l'utilisateur
     return render_template("quizz4.html", question=question, answers=answers, score=score4)
+
+@app.route("/score", methods=["GET", "POST"])
+
+def score():
+         
+
+    score=session["final_score"]
+    
+   
+
+    return render_template("score.html",score=score)
+
+
+
+
 
 
 

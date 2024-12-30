@@ -1,32 +1,129 @@
-2024-12-25 06:36:52,570 - INFO - Application started correctly
-2024-12-25 06:36:52,751 - INFO - Application started correctly
-2024-12-26 16:21:13,186 - INFO - Application started correctly
-2024-12-26 16:21:28,347 - INFO - User login sucessfully
-2024-12-26 16:50:34,558 - INFO - Application started correctly
-2024-12-26 17:29:46,225 - INFO - Application started correctly
-2024-12-26 17:34:03,672 - INFO - Application started correctly
-2024-12-26 17:35:21,905 - INFO - Application started correctly
-2024-12-26 17:55:25,690 - INFO - Application started correctly
-2024-12-26 17:56:17,114 - INFO - user logout
-2024-12-26 17:56:17,114 - INFO - user password changed successfully
-2024-12-26 18:01:57,597 - INFO - Application started correctly
-2024-12-26 18:03:33,935 - INFO - Application started correctly
-2024-12-26 18:04:39,580 - INFO - Application started correctly
-2024-12-26 18:05:00,248 - INFO - Application started correctly
-2024-12-26 18:06:16,874 - INFO - Application started correctly
-2024-12-26 18:06:44,846 - INFO - Application started correctly
-2024-12-27 07:05:28,390 - INFO - Application started correctly
-2024-12-27 07:05:38,643 - INFO - User login sucessfully
-2024-12-27 07:07:48,172 - INFO - Application started correctly
-2024-12-27 07:07:48,344 - INFO - Application started correctly
-2024-12-27 07:08:52,267 - INFO - Application started correctly
-2024-12-27 07:09:08,689 - INFO - Application started correctly
-2024-12-27 07:10:48,107 - INFO - Application started correctly
-2024-12-27 07:11:40,949 - INFO - Application started correctly
-2024-12-27 07:12:03,692 - INFO - score registered in the database successfully
-2024-12-27 07:12:31,872 - INFO - score registered in the database successfully
-2024-12-27 07:13:31,516 - INFO - Application started correctly
-2024-12-27 08:41:16,200 - INFO - user logout
-2024-12-27 09:42:19,468 - INFO - User login sucessfully
-2024-12-27 18:20:29,891 - INFO - user logout
-2024-12-27 18:20:39,125 - INFO - User login sucessfully
+2024-12-29 18:35:53,353 - INFO - user logout
+2024-12-29 18:36:01,360 - INFO - User login sucessfully
+2024-12-29 18:36:36,969 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:40:40,281 - INFO - Application started correctly
+2024-12-29 18:40:40,450 - INFO - Application started correctly
+2024-12-29 18:41:48,563 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 18:42:14,938 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 18:42:22,243 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:42:24,826 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:42:45,094 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:46:03,564 - INFO - Application started correctly
+2024-12-29 18:51:07,612 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:54:37,846 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:57:34,559 - INFO - Application started correctly
+2024-12-29 18:57:38,733 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:57:42,230 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:58:10,920 - INFO - Application started correctly
+2024-12-29 18:58:11,084 - INFO - Application started correctly
+2024-12-29 18:58:15,655 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:58:17,497 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 18:58:19,612 - INFO - user logout
+2024-12-29 18:58:24,236 - INFO - User login sucessfully
+2024-12-29 18:59:13,403 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:02:38,692 - INFO - Application started correctly
+2024-12-29 19:02:38,859 - INFO - Application started correctly
+2024-12-29 19:04:15,862 - INFO - Application started correctly
+2024-12-29 19:05:10,278 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:09:03,110 - INFO - Application started correctly
+2024-12-29 19:09:09,215 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:09:37,787 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:09:40,454 - INFO - user logout
+2024-12-29 19:09:46,580 - INFO - User login sucessfully
+2024-12-29 19:10:17,536 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:14:21,534 - INFO - Application started correctly
+2024-12-29 19:16:33,362 - INFO - Application started correctly
+2024-12-29 19:17:50,023 - INFO - Application started correctly
+2024-12-29 19:18:06,776 - INFO - user logout
+2024-12-29 19:18:11,556 - INFO - User login sucessfully
+2024-12-29 19:19:20,202 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:22:30,756 - INFO - Application started correctly
+2024-12-29 19:23:19,197 - INFO - user logout
+2024-12-29 19:23:25,055 - INFO - User login sucessfully
+2024-12-29 19:25:14,963 - INFO - Application started correctly
+2024-12-29 19:25:36,685 - INFO - Application started correctly
+2024-12-29 19:26:03,376 - INFO - Application started correctly
+2024-12-29 19:26:25,968 - INFO - Application started correctly
+2024-12-29 19:30:41,183 - INFO - Application started correctly
+2024-12-29 19:32:40,658 - INFO - Application started correctly
+2024-12-29 19:33:30,901 - INFO - Application started correctly
+2024-12-29 19:34:23,020 - INFO - Application started correctly
+2024-12-29 19:35:47,607 - INFO - Application started correctly
+2024-12-29 19:36:13,288 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:36:50,186 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:37:23,880 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:38:32,137 - INFO - Application started correctly
+2024-12-29 19:38:57,980 - INFO - Application started correctly
+2024-12-29 19:39:38,212 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:39:42,783 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:39:50,658 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:42:17,757 - INFO - Score enregistré dans la base de données avec succès
+2024-12-29 19:42:22,423 - WARNING - Aucune question restante pour ce quiz.
+2024-12-29 19:49:25,315 - INFO - Application started correctly
+2024-12-29 19:50:45,966 - INFO - Application started correctly
+2024-12-29 19:50:55,843 - WARNING - Quizz was not reset properly
+2024-12-29 19:51:15,656 - INFO - Application started correctly
+2024-12-29 19:51:18,325 - WARNING - Quizz was not reset properly
+2024-12-29 19:51:50,482 - INFO - Application started correctly
+2024-12-29 19:59:36,792 - INFO - Application started correctly
+2024-12-29 20:01:30,890 - INFO - Application started correctly
+2024-12-29 20:01:37,353 - WARNING - Quizz was not reset properly
+2024-12-29 20:02:19,344 - WARNING - Quizz was not reset properly
+2024-12-29 20:08:32,634 - INFO - Application started correctly
+2024-12-29 20:09:37,892 - INFO - Application started correctly
+2024-12-29 20:10:15,838 - WARNING - Quizz was not reset properly
+2024-12-29 20:10:45,453 - INFO - Application started correctly
+2024-12-29 20:11:27,389 - INFO - Application started correctly
+2024-12-29 20:11:48,021 - WARNING - Quizz was not reset properly
+2024-12-29 20:13:18,784 - INFO - Application started correctly
+2024-12-30 05:01:45,346 - WARNING - Quizz was not reset properly
+2024-12-30 05:05:14,646 - WARNING - Quizz was not reset properly
+2024-12-30 05:13:54,856 - INFO - Application started correctly
+2024-12-30 05:14:00,176 - WARNING - Quizz was not reset properly
+2024-12-30 05:14:02,600 - WARNING - Quizz was not reset properly
+2024-12-30 05:14:09,768 - INFO - user logout
+2024-12-30 05:14:16,208 - INFO - User login sucessfully
+2024-12-30 05:14:51,273 - WARNING - Quizz was not reset properly
+2024-12-30 05:21:03,325 - WARNING - Quizz was not reset properly
+2024-12-30 05:24:23,911 - INFO - Application started correctly
+2024-12-30 05:24:51,622 - INFO - Application started correctly
+2024-12-30 05:25:00,996 - INFO - user logout
+2024-12-30 05:25:07,966 - INFO - User login sucessfully
+2024-12-30 05:25:22,836 - ERROR - user didnt select an answer
+2024-12-30 05:25:29,974 - WARNING - Quizz was not reset properly
+2024-12-30 05:26:47,816 - INFO - Application started correctly
+2024-12-30 05:26:47,984 - INFO - Application started correctly
+2024-12-30 05:26:53,216 - WARNING - Quizz was not reset properly
+2024-12-30 05:29:39,539 - INFO - Application started correctly
+2024-12-30 05:29:51,229 - INFO - user logout
+2024-12-30 05:29:57,177 - INFO - User login sucessfully
+2024-12-30 05:30:32,116 - WARNING - Quizz was not reset properly
+2024-12-30 05:32:20,701 - INFO - Application started correctly
+2024-12-30 05:34:53,188 - INFO - user logout
+2024-12-30 05:35:00,837 - INFO - User login sucessfully
+2024-12-30 05:35:20,441 - INFO - score registered succesfully
+2024-12-30 05:35:20,441 - INFO - session reset sucessful
+2024-12-30 05:37:10,348 - INFO - score registered succesfully
+2024-12-30 05:37:10,348 - INFO - session reset sucessful
+2024-12-30 05:37:52,303 - INFO - score registered succesfully
+2024-12-30 05:37:52,303 - INFO - session reset sucessful
+2024-12-30 06:04:32,712 - INFO - Application started correctly
+2024-12-30 06:09:26,141 - INFO - Application started correctly
+2024-12-30 06:11:16,424 - INFO - Application started correctly
+2024-12-30 06:12:55,021 - INFO - user logout
+2024-12-30 06:13:00,545 - INFO - User login sucessfully
+2024-12-30 06:14:05,096 - INFO - score registered succesfully
+2024-12-30 06:14:05,096 - INFO - session reset sucessful
+2024-12-30 06:14:57,562 - INFO - score registered succesfully
+2024-12-30 06:14:57,562 - INFO - session reset sucessful
+2024-12-30 06:25:20,745 - INFO - user logout
+2024-12-30 06:26:02,566 - INFO - User login sucessfully
+2024-12-30 06:26:29,544 - ERROR - User didnt select an answer
+2024-12-30 06:26:52,730 - INFO - session reset sucessful
+2024-12-30 06:26:52,731 - INFO - Score registered succesful
+2024-12-30 06:27:21,888 - INFO - user logout
+2024-12-30 06:33:24,803 - INFO - Application started correctly
+2024-12-30 06:34:08,845 - INFO - User login sucessfully
+2024-12-30 06:36:42,858 - INFO - user logout
+2024-12-30 06:37:22,336 - INFO - User login sucessfully
+2024-12-30 06:38:18,575 - INFO - user logout

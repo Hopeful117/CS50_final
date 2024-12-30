@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Success
+{% endblock %}
+
+{% block content %}
+<div class="Score">
+   <div>
+      You scored {{score}} / 10 !
+   </div>
+   <div>
+      <button class="btn-next"><a href="/dashboard">Dashboard</a></button>
+   </div>
+</div>
+{% endblock %}
