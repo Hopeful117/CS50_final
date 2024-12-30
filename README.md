@@ -1,5 +1,6 @@
 # Duck Language Learning  
-## Learn French with Interactive Lessons and Quizzes  
+## Learn French with Interactive Lessons and Quizzes
+## Video demo: https://www.youtube.com/watch?v=5nLuII_nQfc  
 
 Duck Language Learning is a CS50x final project built with Flask. The app helps users learn basic French through interactive lessons, quizzes, and audio exercises. User data is stored in a SQLite database.
 
