@@ -9,8 +9,7 @@ function dark_mode() {
     const body = document.querySelector("body");
     const lessontitle = document.querySelectorAll(".lesson-title");
     const words = document.querySelectorAll("h2.word");
-
- 
+    const about = document.querySelectorAll("p.dl");
     // Fonction pour appliquer le mode sombre ou clair
     function applyMode(isDarkMode) {
         if (isDarkMode) {
@@ -36,12 +35,20 @@ function dark_mode() {
 
             words.forEach((word)=>{
                 word.style.color="Black";
-                console.log("debug")
+                
             });
+
+            about.forEach((dl)=>{
+                dl.style.color="White";
+            });
+
+          
+
 
 
            
         } else {
+          
             top.style.backgroundColor = "White";
             top.style.color = "Black";
             duck.src = lightDuckUrl;
@@ -61,8 +68,18 @@ function dark_mode() {
                 lesson.style.color="Black";
             });
 
-        }
-    }
+
+           
+
+        
+
+             
+
+           
+
+
+        };
+    };
 
     // Charger le mode sombre depuis localStorage
     const savedMode = localStorage.getItem("darkMode") === "true";

@@ -519,3 +519,19 @@ footer
     
    
   }
+
+
+  .Score
+
+  {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size:larger;
+    margin:30px;
+    background-color: white;
+    border: black 2px solid;
+    padding: 50px;
+    
+  }

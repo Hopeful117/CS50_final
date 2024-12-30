@@ -77,15 +77,15 @@ lesson3 = {
     },
     "Il": {
         "english_sentence": "He is watching TV.",
-        "french_sentence": "__ regarde la télévision."
+        "french_sentence": "__ regarde la télévision.(male)"
     },
     "Elle": {
         "english_sentence": "She is reading a book.",
-        "french_sentence": "__ lit un livre."
+        "french_sentence": "__ lit un livre.(female)"
     },
-    "On": {
+    "On(undefined)": {
         "english_sentence": "One should always be polite.",
-        "french_sentence": "__ devrait toujours être poli."
+        "french_sentence": "__ devrait toujours être poli.(neutral)"
     },
     "Nous": {
         "english_sentence": "We are going to the park.",
@@ -97,11 +97,15 @@ lesson3 = {
     },
     "Ils": {
         "english_sentence": "They are playing football.",
-        "french_sentence": "__ jouent au football."
+        "french_sentence": "__ jouent au football.(male)"
     },
     "Elles": {
         "english_sentence": "They are shopping together.",
-        "french_sentence": "__ font du shopping ensemble."
+        "french_sentence": "__ font du shopping ensemble.(female)"
+    },
+    "On(informal)": {
+        "english_sentence": "We are going to the library.",
+        "french_sentence": "__ va à la bibliothèque."
     }
 }
 
